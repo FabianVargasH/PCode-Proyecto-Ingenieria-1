@@ -1,0 +1,524 @@
+html {
+    font-size: 16px;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+}
+body {
+    margin: 0;
+    color: #111827;
+    background-color: #fff;
+}
+/* LAYOUT BÁSICO */
+.contenedor_pagina {
+    position: relative;
+    min-height: 100vh;
+}
+.contenido_pagina {
+    padding-bottom: 5.25rem;
+}
+
+.contenedor_principal {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+/* COMPONENTE - HEADER */
+.encabezado {
+    background-color: #1E3A8A;
+    padding: 25px;
+    padding-left: 80px;
+    text-align: left;
+    color: #fff;
+    font-size: 20px;
+    display: block;
+}
+.contenedor_enlace_inicio {
+    text-align: right;
+    margin-top: -50px;
+}
+.enlace_inicio {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: #60A5FA;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 20px;
+}
+.enlace_inicio:hover {
+    background-color: #5093e6;
+}
+/* COMPONENTE - FOOTER */
+.pie_pagina {
+    width: 100%;
+    padding: 40px;
+    bottom: 0;
+    position: absolute;
+    height: 5.25rem;
+    background-color: #1E3A8A;
+    color: #fff;
+    text-align: left;
+}
+/* COMPONENTE - MAIN */
+.contenido_principal {
+    padding: 20px;
+}
+/* COMPONENTE - BOTONES */
+/* Botón primario */
+.btn_primario {
+    padding: 12px 30px;
+    background-color: #60A5FA;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+}
+.btn_primario:hover {
+    background-color: #5294e5;
+}
+/* Botón secundario */
+.btn_secundario {
+    padding: 12px 30px;
+    background-color: #dadce1;
+    color: #111827;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    margin: 10px;
+}
+.btn_secundario:hover {
+    background-color: #cfd0d2;
+}
+/* Botón grande */
+.btn_grande {
+    padding: 18px 40px;
+    font-size: 25px;
+    font-weight: 500;
+    width: 200px;
+}
+/* Botón de ancho completo */
+.btn_ancho_completo {
+    width: 100%;
+    margin: 10px 0;
+}
+/* Botón de envío */
+.btn_enviar {
+    background-color: #60A5FA;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px;
+}
+.btn_enviar:hover {
+    background-color: #5294e5;
+}
+/* FORMULARIOS */
+/* Contenedor del formulario estándar */
+.contenedor_formulario {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+/* Contenedor del formulario grande (para registro) */
+.contenedor_formulario_grande {
+    width: 950px;
+    margin: 0 auto;
+    background-color: #F9FAFB;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+/* Formulario principal */
+.formulario_principal {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+/* Etiquetas de formulario */
+.etiqueta_formulario {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #374151;
+    font-size: 16px;
+}
+.etiqueta_formulario_grande {
+    font-weight: 500;
+    color: #111827;
+    font-size: 25px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+/* Campos de entrada de texto */
+.txt_campo {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+/* Campos de entrada grandes */
+.txt_campo_grande {
+    padding: 18px;
+    border: 2px solid #D1D5DB;
+    border-radius: 6px;
+    font-size: 18px;
+    width: 100%;
+    margin: 5px 0;
+}
+/* Sección de formulario */
+.seccion_formulario {
+    margin-bottom: 30px;
+    text-align: left;
+}
+.titulo_seccion {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #1E3A8A;
+    text-align: left;
+    border-bottom: 2px solid #E5E7EB;
+    padding-bottom: 10px;
+}
+/* Sección de información personal */
+.informacion_personal {
+    margin-bottom: 30px;
+    text-align: left;
+}
+.informacion_personal .etiqueta_formulario {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #374151;
+}
+.informacion_personal .txt_campo {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+/* Sección de información de cuenta */
+.informacion_cuenta {
+    margin-bottom: 30px;
+    text-align: left;
+}
+.informacion_cuenta .etiqueta_formulario {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #374151;
+}
+.informacion_cuenta .txt_campo {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+}
+/* COMPONENTE - TÍTULOS */
+.titulo_principal {
+    text-align: center;
+    font-size: 45px;
+    margin-bottom: 30px;
+    color: #1E3A8A;
+}
+.subtitulo {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    color: #4B5563;
+    text-align: center;
+}
+/* COMPONENTE - TARJETAS */
+.tarjeta {
+    background-color: #fff;
+    border: 2px solid #c4c4c6;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    display: block;
+    min-height: 120px;
+    max-width: 280px;
+}
+.tarjeta:hover {
+    background-color: #60A5FA;
+}
+.tarjeta:hover h3 {
+    color: #fff;
+}
+.tarjeta:hover p {
+    color: #fff;
+}
+.tarjeta:hover a {
+    color: #1E3A8A;
+}
+.tarjeta h3 {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+    color: #1E3A8A;
+}
+.tarjeta p {
+    font-size: 0.9rem;
+    color: #111827;
+}
+.tarjeta a {
+    color: #1E3A8A;
+    text-decoration: none;
+    font-weight: 600;
+}
+/* COMPONENTE - CONTENEDORES DE TARJETAS */
+.contenedor_tarjetas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
+}
+/* COMPONENTE - ENLACES */
+.enlace_navegacion {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 20px;
+}
+.enlace_navegacion a {
+    color: #1E3A8A;
+    text-decoration: none;
+}
+.enlace_navegacion a:hover {
+    color: #60A5FA;
+}
+.enlace_administrador {
+    text-decoration: none;
+    color: #111827;
+    display: block;
+}
+/* Responsividad */
+@media (max-width: 1024px) {
+    .imagen_grande {
+        height: 400px;
+    }
+    
+    .slide-text {
+        font-size: 32px;
+        padding: 10px 20px;
+        max-width: 90%;
+    }
+    
+    .seccion_contenido {
+        flex-direction: column;
+    }
+    
+    .contenedor-imagen {
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    #grupo_trabajo {
+        margin-right: 1200px;
+    }
+    
+    .titulo_secundario {
+        font-size: 30px;
+    }
+}
+
+/* Tablets pequeñas y móviles grandes (768px y menos) */
+@media (max-width: 768px) {
+    .imagen_grande {
+        height: 300px;
+    }
+    
+    .slide-text {
+        font-size: 24px;
+        max-width: 90%;
+        padding: 8px 16px;
+    }
+    
+    #anteriorBtn, #siguienteBtn {
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+    }
+    
+    #anteriorBtn {
+        left: 10px;
+    }
+    
+    #siguienteBtn {
+        right: 10px;
+    }
+    
+    .titulo_secundario {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+    
+    .texto_Descriptivo {
+        font-size: 1rem;
+    }
+    
+    #grupo_trabajo {
+        margin-right: 800px;
+        width: 70px;
+    }
+    
+    #grupo_trabajo h2 {
+        font-size: 13px;
+    }
+    
+    .landing_navegacion_header {
+        margin-bottom: -15px;
+    }
+}
+
+/* Móviles pequeños (480px y menos) */
+@media (max-width: 480px) {
+    .imagen_grande {
+        height: 250px;
+    }
+    
+    .slide-text {
+        font-size: 20px;
+        padding: 8px 15px;
+        max-width: 95%;
+    }
+    
+    .titulo_secundario {
+        font-size: 24px;
+        margin-bottom: 30px;
+    }
+    
+    #anteriorBtn, #siguienteBtn {
+        width: 35px;
+        height: 35px;
+        font-size: 18px;
+    }
+    
+    #anteriorBtn {
+        left: 5px;
+    }
+    
+    #siguienteBtn {
+        right: 5px;
+    }
+    
+    .texto_Descriptivo {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    #grupo_trabajo {
+        margin-right: 400px;
+        width: 60px;
+        margin-top: -90px;
+    }
+    
+    #grupo_trabajo h2 {
+        font-size: 12px;
+    }
+    
+    .landing_navegacion_header {
+        margin-bottom: -10px;
+    }
+}
+
+/* Móviles muy pequeños (320px y menos) */
+@media (max-width: 320px) {
+    .imagen_grande {
+        height: 220px;
+    }
+    
+    .slide-text {
+        font-size: 18px;
+        padding: 6px 12px;
+    }
+    
+    .titulo_secundario {
+        font-size: 22px;
+        margin-bottom: 25px;
+    }
+    
+    #anteriorBtn, #siguienteBtn {
+        width: 30px;
+        height: 30px;
+        font-size: 16px;
+    }
+    
+    .texto_Descriptivo {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    
+    #grupo_trabajo {
+        margin-right: 280px;
+        width: 50px;
+        margin-top: -80px;
+    }
+    
+    #grupo_trabajo h2 {
+        font-size: 11px;
+    }
+}
+
+                                           /* === Dashboard: Estilos Específicos === */
+
+.intro {
+  background-color: #F3F4F6;
+  padding: 30px;
+  text-align: center;
+}
+
+.intro p {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+.intro label {
+  font-size: 16px;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.intro select {
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: white;
+  transition: border-color 0.3s;
+}
+
+.intro select:focus {
+  outline: none;
+  border-color: #1E3A8A;
+}
