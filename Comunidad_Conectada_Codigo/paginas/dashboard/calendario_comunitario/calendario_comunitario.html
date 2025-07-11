@@ -5,27 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Calendario Comunitario</title>
   <link rel="stylesheet" href="../../../css/estilos.css"/>
+
+<!-- FullCalendar CSS -->
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet" />
+
+<!-- FullCalendar JS -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+
+<!-- Enlace al script -->
+<script src="../../../js/calendario.js" defer></script>
+
 </head>
 <body>
 
   <!-- Encabezado -->
   <header class="encabezado">
     Comunidad-Conectada
-    <span style="float: right; margin-right: 50px;">Calendario Comunitario
-      <a href="../dashboard/dashboard.html" class="enlace_inicio">← Volver al inicio</a>
+    <span style="float: right; margin-right: 50px;">
+      Calendario Comunitario
+      <a href="../dashboard.html" class="enlace_inicio">← Volver al inicio</a>
     </span>
   </header>
 
   <!-- Contenedor principal -->
   <main class="contenedor_principal contenido_principal" style="display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 30px;">
 
-    <!-- Área de imagen o calendario -->
-    <section style="flex: 1; min-width: 300px;">
-      <div style="width: 100%; height: 400px; background-color: #c4c4c6; display: flex; align-items: center; justify-content: center;">
-        <!-- Aquí puede ir una imagen o el calendario interactivo más adelante -->
-        <span style="color: #666;">[ Calendario aquí ]</span>
-      </div>
-      <p style="margin-top: 15px;">Nota: Todo evento propuesto pasará por un sistema de aprobación/rechazo</p>
+    <!-- Calendario interactivo -->
+    <section style="flex: 1; min-width: 300px; margin-right: 20px;">
+      <div id="calendario" style="width: 100%; height: 400px;"></div>
     </section>
 
     <!-- Formulario para proponer evento -->
@@ -33,7 +40,7 @@
       <div class="contenedor_formulario">
         <h2 class="titulo_seccion">Proponer evento</h2>
 
-        <form class="formulario_principal">
+        <form id="formEvento" class="formulario_principal">
           <label class="etiqueta_formulario" for="titulo">Título del evento</label>
           <input class="txt_campo" type="text" id="titulo" name="titulo" required>
 
@@ -61,5 +68,9 @@
     <p>@PCode derechos reservados 2025</p>
   </footer>
 
+  <!-- FullCalendar JS y script local -->
+  <script src="../../../js/calendario.js"></script>
+
 </body>
 </html>
+
