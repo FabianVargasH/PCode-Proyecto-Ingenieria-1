@@ -522,3 +522,43 @@ body {
   outline: none;
   border-color: #1E3A8A;
 }
+
+                                    /* === Dashboard/emprendimientos/JoseCarlos === */
+
+
+h2{
+    font-size: 15px;
+    margin-top: -66px;
+    color: #aaa;
+}
+
+.tabs {
+      display: flex;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      background-color: #ccc;
+      width:100vw;
+    }
+
+    .tabs a {
+      flex:1;
+      text-align: center;
+      padding: 15px 0px;
+      text-decoration: none;
+      color: black;
+      background-color: #eee;
+      border-right: 1px solid #aaa;
+    }
+
+
+    .tabs a.active {
+      background-color: white;
+      border-bottom: 1px solid white;
+      font-weight: bold;
+    }
+
+    .tabs a.active2 {
+      background-color: white;
+      border-bottom: 1px solid white;
+      font-weight: bold;
+    }
