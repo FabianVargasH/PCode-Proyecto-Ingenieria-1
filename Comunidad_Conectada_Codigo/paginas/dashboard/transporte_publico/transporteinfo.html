@@ -3,106 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>transporte publico</title>
+    <title>Transporte Público - Comunidad Conectada</title>
     <link rel="stylesheet" href="/css/estilos.css">
 </head>
-
 <body>
     <div class="contenedor_pagina">
         <div class="contenido_pagina">
             <header class="encabezado">
                 <h1>Comunidad-Conectada</h1>
                 <div class="contenedor_enlace_inicio">
-                    <a href="#" class="enlace_inicio"> ← Volver al inicio</a>
+                    <a href="/paginas/dashboard/dashboard.html" class="enlace_inicio"> ← Volver al inicio</a>
                 </div>
             </header>
-            
-
-            <div class="contenedor_pagina">
-        <div class="contenido_pagina">
             <main class="contenido_principal">
                 <div class="contenedor_principal">
-
-                    <!-- Titulo -->
-                        <form id="formulario_crear" novalidate>
-                            <h3 class="subtitulo_lista_publica">Transporte Publico de la Comunidad</h3>
-                        </form>
+                    <!-- Cabecera con título -->
+                    <div class="titulo_principal">
+                        <h2>Transporte Público Comunitario</h2>
+                        <p class="subtitulo">Información actualizada de rutas y horarios</p>
                     </div>
-
-                    <!-- Sección principal -->
+                    <!-- Contenedor principal de dos columnas -->
                     <div class="contenedor_transporte_horarios">
+                        <!-- Columna izquierda - Información de ruta -->
                         <div class="seccion_formulario_transporte">
-                            <p class="ruta"><strong>Ruta x</strong></p>
-                            <p class="recorrido"><strong>Recorrido:</strong></p>
-                            <p class="tarifa"><strong>Tarifa: [monto]</strong></p>
-                            
+                            <div class="info-ruta">
+                                <h3 class="titulo_principal">Ruta <h4>
+                                    Descripcion Ruta
+                                </h4></h3>
+                                <div class="detalle-ruta">
+                                    <p class="recorrido"><strong><h2>Recorrido:</h2></strong> Desde [punto A] hasta [punto B]</p>
+                                    <p class="tarifa"><strong><h2>Tarifa base:</h2></strong> $XXXX</p>
+                                </div>
+                            </div>
                         </div>
+                        <!-- Columna derecha - Horarios -->
                         <div class="schedule">
-                                <horario>Horarios</horario>
+                            <h5 class="titulo_principal">Horarios de Operación</h5>
+                            <div class="tabla-horarios">
                                 <table>
                                     <thead>
-                                    <tr>
-                                        <th>Día</th>
-                                        <th>Primer Bus</th>
-                                        <th>Último Bus</th>
-                                        <th>Frecuencia</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Día</th>
+                                            <th>Primer Bus</th>
+                                            <th>Último Bus</th>
+                                            <th>Frecuencia</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>X</td>
-                                        <td>HH:MM</td>
-                                        <td>HH:MM</td>
-                                        <td>X Minutos</td>
-                                    </tr>
-                                    <tr>
-                                        <td>X</td>
-                                        <td>HH:MM</td>
-                                        <td>HH:MM</td>
-                                        <td>X Minutos</td>
-                                    </tr>
+                                        <tr>
+                                            <td>Lunes a Viernes</td>
+                                            <td>00:00</td>
+                                            <td>00:00</td>
+                                            <td>00 min</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Sábados</td>
+                                            <td>00:00</td>
+                                            <td>00:00</td>
+                                            <td>00 min</td>
+                                        </tr>
                                     </tbody>
                                 </table>
-                                </div>
-                            </section>
-                    </div>
-
-                    
-
-
-                    <!-- Sección principal -->
-                    <div class="contenedor_contactos_oficiales">
-                        
-                        <div>
-                            <contacto_oficial>
-                                Contactos Oficiales
-                            </contacto_oficial>
-
-                           <div class="seccion_formulario">
-                                <label class="etiqueta_formulario" for="ruta">Ruta x</label>
-                                <input type="text" class="txt_campo" id="telefono" name="telefono" placeholder="Telefono: 111111111">
-                                <input type="text" class="txt_campo" id="email" name="email" placeholder="Email: correo@dominio.com">
-
-                                <label class="etiqueta_formulario" for="ruta">Ruta x</label>
-                                <input type="text" class="txt_campo" id="telefono" name="telefono" placeholder="Telefono: 111111111">
-                                <input type="text" class="txt_campo" id="email" name="email" placeholder="Email: correo@dominio.com">
-
-                                
-                                
                             </div>
-                                
                         </div>
-                        <img class="imagen_transporte" src="https://img.freepik.com/vector-gratis/autobus-escolar-dibujos-animados-sobre-fondo-blanco_1308-132853.jpg" alt="">
                     </div>
-
+                    <!-- Sección de contactos -->
+                    <div class="contenedor_contactos_oficiales">
+                        <div class="contactos-contenido">
+                            <h4 class="titulo_principal">Contactos Oficiales</h4>
+                            
+                            <div class="lista-contactos">
+                                <div class="contacto-item">
+                                    <h2>Ruta X</h2>
+                                    <div class="info-contacto">
+                                        <input type="text" class="txt_campo" value="Teléfono: 0000-0000" readonly>
+                                        <input type="text" class="txt_campo" value="Email: correo@domino.com" readonly>
+                                    </div>
+                                </div>
+                                
+                                <div class="contacto-item">
+                                    <h2>Ruta Y</h2>
+                                    <div class="info-contacto">
+                                        <input type="text" class="txt_campo" value="Teléfono: 0000-0000" readonly>
+                                        <input type="text" class="txt_campo" value="Email: correo@domino.com" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
-
-            
-            <footer class="pie_pagina">
+        <footer class="pie_pagina">
             <p>@PCode</p>
         </footer>
-
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/main.js"></script>
 </body>
