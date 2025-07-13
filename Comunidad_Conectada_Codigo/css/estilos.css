@@ -734,15 +734,6 @@ body {
     border: 2px solid #000000;
 }
 /* === emprendimientos/transporteinfo/JoseCarlos === */
-.ruta{
-    padding: 10px;
-}
-.recorrido{
-    padding: 10px;
-}
-.tarifa{
-    padding: 10px;
-}
 .contenedor_transporte_horarios{
     gap: 300px;
     display: flex;
@@ -761,7 +752,6 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
-  
 }
 .schedule th,
 .schedule td {
@@ -770,28 +760,40 @@ body {
   text-align: center;
   border: 2px solid #000000;
 }
-.horario{
-    font-size: 20px;
-    margin-left: 125px;
-}
-.contenedor_contactos_oficiales{
-    gap: 300px;
+.contenedor_contactos_oficiales {
     display: flex;
     max-width: 900px;
-    margin: 0 auto;
-    margin-top: 100px;
+    margin: 50px auto 0;
     background: white;
-    padding: 50px;
-    padding-bottom: 5px;
+    padding: 30px;
     border-radius: 8px;
     border: 2px solid #000000;
 }
-.contacto_oficial{
-    padding-left: 1000px;
+.contactos-contenido {
+    flex: 1;
+    padding-right: 30px; 
+    min-width: 0; 
 }
-.imagen_transporte{
-    width: 300px;
-    height: 300px;
+.titulo_principal {
+    margin-bottom: 20px;
+    color: #1E3A8A;
+}
+.contacto-item {
+    margin-bottom: 20px;
+}
+.contacto-item h2 {
+    font-size: 1.3rem;
+    color: #1E3A8A;
+    margin-bottom: 10px;
+}
+.info-contacto {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.txt_campo {
+    background: #F3F4F6;
+    border: 2px solid #E5E7EB;
 }
 /* ========================================
    MEDIA QUERIES - RESPONSIVIDAD GENERAL
