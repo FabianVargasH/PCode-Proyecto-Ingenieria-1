@@ -8,7 +8,6 @@
 html {
     font-size: 16px;
 }
-
 * {
     margin: 0;
     padding: 0;
@@ -563,7 +562,7 @@ body {
     line-height: 1.6;
 }
 
-/* DASHBOARD - ESTILOS ESPECÍFICOS */
+/* DASHBOARD */
 .selector_comunidad {
     margin: 20px 0;
 }
@@ -603,7 +602,6 @@ body {
     color: #6B7280;
     margin-bottom: 15px;
 }
-
 /* === Calendario Comunitario === */
 
 .contenedor_calendario {
@@ -658,12 +656,10 @@ body {
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
 }
-
 .formulario_evento textarea {
   resize: vertical;
   min-height: 80px;
 }
-
 .formulario_evento .btn_enviar {
   background-color: #60A5FA;
   color: #ffffff;
@@ -674,212 +670,285 @@ body {
   font-weight: 600;
   transition: background-color 0.3s;
 }
-
 .formulario_evento .btn_enviar:hover {
   background-color: #5294e5;
 }
-
 .nota_evento {
   margin-top: 20px;
   font-size: 14px;
   color: #374151;
   font-style: italic;
 }
-
+.tab-container {
+  width: 100%;
+  display: flex;
+  justify-content: center; 
+  background-color: #e0e0e0; 
+  border-bottom: 1px solid #999;
+}
+.tab {
+  flex: 1; 
+  padding: 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #999;
+  border-bottom: none; 
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.tab:hover {
+  background-color: #ddd;
+}
+/* === emprendimientos/lista_publica/JoseCarlos === */
+.subtitulo_lista_publica {
+    font-size: 1.5rem;
+    margin-top: 70px;
+    color: #4B5563;
+    text-align: center;
+}
+.contenedor_formulario_lista_publica {
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 10px;
+    background: white;
+    padding: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+.txt_campo_1 {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 2rem;
+    margin-bottom: 100px;
+    border: 2px solid #000000;
+}
+.txt_campo_2 {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 2rem;
+    margin-bottom: 15px;
+    border: 2px solid #000000;
+}
+/* === emprendimientos/transporteinfo/JoseCarlos === */
+.ruta{
+    padding: 10px;
+}
+.recorrido{
+    padding: 10px;
+}
+.tarifa{
+    padding: 10px;
+}
+.contenedor_transporte_horarios{
+    gap: 300px;
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 50px;
+    background: white;
+    padding: 50px;
+    border-radius: 8px;
+    border: 2px solid #000000;
+}
+.seccion_formulario_transporte {
+    margin-top: 26px;
+}
+.schedule table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  
+}
+.schedule th,
+.schedule td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+  border: 2px solid #000000;
+}
+.horario{
+    font-size: 20px;
+    margin-left: 125px;
+}
+.contenedor_contactos_oficiales{
+    gap: 300px;
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+    margin-top: 100px;
+    background: white;
+    padding: 50px;
+    padding-bottom: 5px;
+    border-radius: 8px;
+    border: 2px solid #000000;
+}
+.contacto_oficial{
+    padding-left: 1000px;
+}
+.imagen_transporte{
+    width: 300px;
+    height: 300px;
+}
 /* ========================================
    MEDIA QUERIES - RESPONSIVIDAD GENERAL
    ======================================== */
 @media (max-width: 1024px) {
     .imagen_grande {
         height: 400px;
-    }
-    
+    } 
     .slide-text {
         font-size: 32px;
         padding: 10px 20px;
         max-width: 90%;
-    }
-    
+    }    
     .seccion_contenido {
         flex-direction: column;
-    }
-    
+    }  
     .contenedor-imagen {
         max-width: 100%;
         margin-right: 0;
         margin-bottom: 20px;
         text-align: center;
-    }
-    
+    }  
     #grupo_trabajo {
         margin-right: 1200px;
     }
-    
     .titulo_secundario {
         font-size: 30px;
     }
 }
-
 @media (max-width: 768px) {
     .imagen_grande {
         height: 300px;
     }
-    
     .slide-text {
         font-size: 24px;
         max-width: 90%;
         padding: 8px 16px;
     }
-    
     #anteriorBtn, #siguienteBtn {
         width: 40px;
         height: 40px;
         font-size: 20px;
-    }
-    
+    } 
     #anteriorBtn {
         left: 10px;
-    }
-    
+    }  
     #siguienteBtn {
         right: 10px;
     }
-    
     .titulo_secundario {
         font-size: 28px;
         margin-bottom: 30px;
     }
-    
     .texto_Descriptivo {
         font-size: 1rem;
     }
-    
     #grupo_trabajo {
         margin-right: 800px;
         width: 70px;
     }
-    
     #grupo_trabajo h2 {
         font-size: 13px;
     }
-    
     .landing_navegacion_header {
         margin-bottom: -15px;
     }
-    
     /* Responsividad para campos de teléfono y fecha */
     #campos_telefono_fecha {
         flex-direction: column;
     }
-    
     #campo_telefono .txt_campo, #campo_fecha .txt_campo {
         margin-bottom: 15px;
     }
-    
     #contenedor_botones {
         flex-direction: column;
         align-items: center;
     }
-    
     .contenedor_tarjetas {
         flex-direction: column;
         align-items: center;
     }
-    
     .tarjeta {
         max-width: 100%;
         width: 100%;
     }
 }
-
 @media (max-width: 670px) {
     #grupo_trabajo {
         display: none;
     }
 }
-
 @media (max-width: 480px) {
     .imagen_grande {
         height: 250px;
     }
-    
     .slide-text {
         font-size: 20px;
         padding: 8px 15px;
         max-width: 95%;
     }
-    
     .titulo_secundario {
         font-size: 24px;
         margin-bottom: 30px;
     }
-    
     #anteriorBtn, #siguienteBtn {
         width: 35px;
         height: 35px;
         font-size: 18px;
     }
-    
     #anteriorBtn {
         left: 5px;
     }
-    
     #siguienteBtn {
         right: 5px;
     }
-    
     .texto_Descriptivo {
         font-size: 0.95rem;
         line-height: 1.5;
     }
-    
     #grupo_trabajo {
         margin-right: 400px;
         width: 60px;
         margin-top: -90px;
     }
-    
     #grupo_trabajo h2 {
         font-size: 12px;
     }
-    
     .landing_navegacion_header {
         margin-bottom: -10px;
     }
 }
-
 @media (max-width: 320px) {
     .imagen_grande {
         height: 220px;
     }
-    
     .slide-text {
         font-size: 18px;
         padding: 6px 12px;
     }
-    
     .titulo_secundario {
         font-size: 22px;
         margin-bottom: 25px;
     }
-    
     #anteriorBtn, #siguienteBtn {
         width: 30px;
         height: 30px;
         font-size: 16px;
     }
-    
     .texto_Descriptivo {
         font-size: 0.9rem;
         margin-bottom: 15px;
     }
-    
     #grupo_trabajo {
         margin-right: 280px;
         width: 50px;
         margin-top: -80px;
     }
-    
     #grupo_trabajo h2 {
         font-size: 11px;
     }
