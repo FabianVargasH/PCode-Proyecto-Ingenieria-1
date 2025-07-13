@@ -40,7 +40,6 @@ const reglasValidacionEmprendimiento = {
     descripcionNegocio: (campoInput) => {
         const valorIngresado = campoInput.value.trim();
         
-        // La descripción es opcional, pero si se ingresa debe tener al menos 10 caracteres
         if (valorIngresado && valorIngresado.length < 10) {
             return "La descripción debe tener al menos 10 caracteres";
         }
@@ -130,7 +129,6 @@ btnCrearEmprendimiento.addEventListener("click", (eventoClick) => {
             alert("Error: " + errorEncontrado.mensaje);
         }
         
-        // Hacer scroll al primer campo con error si existe
         if (errorEncontrado.referenciaHTML) {
             errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
             errorEncontrado.referenciaHTML.focus();
