@@ -12,24 +12,27 @@
             <header class="encabezado">
                 <h1>Comunidad-Conectada</h1>
                 <div class="contenedor_enlace_inicio">
-                    <a href="#" class="enlace_inicio"> ← Volver al inicio</a>
+                    <a href="/paginas/dashboard/dashboard.html" class="enlace_inicio"> ← Volver al inicio</a>
                 </div>
             </header>
-
-             <!-- Tabs -->
-    <div class="tab-container">
-    <button href="#" class="tab">Lista de Emprendimientos</button>
-    <button href="#" class="tab">Perfil de Negocio</button>
-    </div>
-
+            <!-- Tabs -->
+            <div class="tab-container">
+                <button href="#" class="tab">
+                    <div class="enlace_navegacion">
+                        <h2><a href="/paginas/dashboard/emprendimientos/lista_publica.html">Lista de Emprendimientos</a></h2>
+                    </div>
+                </button>
+                <button href="#" class="tab">
+                    <div class="enlace_navegacion">
+                        <h2><a href="/paginas/dashboard/emprendimientos/perfil.html">Perfil de Negocio</a></h2>
+                    </div>
+                </button>
+            </div>
             <main class="contenido_principal">
                 <div class="contenedor_principal">
                     <div class="titulo_principal">
                         <h2>Emprendimientos</h2>
                     </div>
-                    
-
-                    
 
                     <!-- Formulario Crear Emprendimiento -->
                     <div class="contenedor_formulario" style="margin-bottom: 30px;">
@@ -54,7 +57,6 @@
                             Nota: Todo emprendimiento creado pasa por un sistema de aprobación/rechazo
                         </p>
                     </div>
-
                     <!-- Formulario Actualizar Emprendimiento -->
                     <div class="contenedor_formulario" style="margin-bottom: 30px;">
                         <form id="formulario_actualizar" novalidate>
@@ -97,7 +99,6 @@
                             Nota: Todo producto agregado pasa por un sistema de aprobación/rechazo
                         </p>
                     </div>
-
                     <!-- Sección Mis Productos -->
                     <div class="contenedor_formulario">
                         <h2 class="titulo_principal">Mis productos</h2>
@@ -111,20 +112,19 @@
                                 <option value="4">Option 4</option>
                             </select>
                         </div>
-
                         <div class="seccion_formulario">
-                            <textarea class="txt_campo" readonly rows="4">[Nombre producto]
-Descripción
-[precio]
-Condición
+                            <textarea class="txt_campo" readonly rows="4">
+                            [Nombre producto]
+                            Descripción
+                            [precio]
+                            Condición
                             </textarea>
                         </div>
-
                         <div class="enlace_navegacion">
                             <button type="button" class="btn_secundario">Eliminar</button>
                         </div>
                     </div>
-
+                </div>
             </main>
         </div>
 
