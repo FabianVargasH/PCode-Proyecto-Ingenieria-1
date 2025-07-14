@@ -853,78 +853,60 @@ th, td {
 /* ========================================
    MEDIA QUERIES - RESPONSIVIDAD GENERAL
    ======================================== */
-@media (max-width: 1024px) {
-    .imagen_grande {
-        height: 400px;
-    } 
-    .slide-text {
-        font-size: 32px;
-        padding: 10px 20px;
-        max-width: 90%;
-    }    
-    .seccion_contenido {
-        flex-direction: column;
-    }  
-    .contenedor-imagen {
-        max-width: 100%;
-        margin-right: 0;
-        margin-bottom: 20px;
+/* TABLETS - 768px y menor */
+@media screen and (max-width: 768px) {
+    .contenedor_principal {
+        padding: 0 15px;
+    }
+    .encabezado {
+        padding: 20px 15px;
+        font-size: 18px;
         text-align: center;
-    }  
+    }
+    .contenedor_enlace_inicio {
+        text-align: center;
+        margin-top: 15px;
+    }
+    .enlace_inicio {
+        padding: 8px 20px;
+        font-size: 16px;
+    }
     #grupo_trabajo {
-        margin-right: 1200px;
+        display: none;
+    }
+    .titulo_principal {
+        font-size: 32px;
+        margin-bottom: 20px;
     }
     .titulo_secundario {
-        font-size: 30px;
-    }
-}
-@media (max-width: 768px) {
-    .imagen_grande {
-        height: 300px;
-    }
-    .slide-text {
         font-size: 24px;
-        max-width: 90%;
-        padding: 8px 16px;
-    }
-    #anteriorBtn, #siguienteBtn {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    } 
-    #anteriorBtn {
-        left: 10px;
-    }  
-    #siguienteBtn {
-        right: 10px;
-    }
-    .titulo_secundario {
-        font-size: 28px;
         margin-bottom: 30px;
     }
-    .texto_Descriptivo {
-        font-size: 1rem;
+    .contenedor_formulario {
+        padding: 30px 20px;
+        margin: 0 15px;
     }
-    #grupo_trabajo {
-        margin-right: 800px;
-        width: 70px;
+    .contenedor_formulario_grande {
+        width: 100%;
+        padding: 20px;
+        margin: 0 15px;
     }
-    #grupo_trabajo h2 {
-        font-size: 13px;
+    .contenedor_formulario_lista_publica {
+        padding: 30px 20px;
+        margin: 0 15px;
     }
-    .landing_navegacion_header {
-        margin-bottom: -15px;
+    .txt_campo_1, .txt_campo_2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
     }
-    /* Responsividad para campos de teléfono y fecha */
-    #campos_telefono_fecha {
-        flex-direction: column;
-    }
-    #campo_telefono .txt_campo, #campo_fecha .txt_campo {
-        margin-bottom: 15px;
+    .btn_grande {
+        width: 100%;
+        padding: 15px;
+        font-size: 20px;
     }
     #contenedor_botones {
-        flex-direction: column;
-        align-items: center;
+        margin-left: 0;
+        text-align: center;
     }
     .contenedor_tarjetas {
         flex-direction: column;
@@ -933,80 +915,293 @@ th, td {
     .tarjeta {
         max-width: 100%;
         width: 100%;
+        margin-bottom: 15px;
     }
-}
-@media (max-width: 670px) {
-    #grupo_trabajo {
-        display: none;
+    .dashboard_grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
     }
-}
-@media (max-width: 480px) {
+    .selector_comunidad select {
+        width: 100%;
+    }
     .imagen_grande {
         height: 250px;
     }
     .slide-text {
-        font-size: 20px;
-        padding: 8px 15px;
-        max-width: 95%;
+        font-size: 24px;
+        padding: 10px 20px;
+        max-width: 90%;
+    }
+    #anteriorBtn, #siguienteBtn {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+    .seccion_contenido {
+        flex-direction: column;
+        margin-bottom: 30px;
+    }
+    .contenedor-imagen {
+        max-width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .contenedor_calendario {
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+    }
+    .calendario_visual {
+        min-height: 250px;
+    }
+    .formulario_evento {
+        padding: 15px;
+    }
+    .contenedor_transporte_horarios {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        margin-top: 30px;
+    }
+    .schedule table {
+        font-size: 14px;
+    }
+    .schedule th,
+    .schedule td {
+        padding: 6px;
+    }
+    .contenedor_contactos_oficiales {
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 30px;
+    }
+    .contactos-contenido {
+        padding-right: 0;
+        padding-bottom: 20px;
+    }
+    #mapa {
+        height: 200px;
+        width: 100%;
+        margin: 20px 0;
+    }
+    .tab-container {
+        flex-direction: column;
+    }
+    .tab {
+        border-bottom: 1px solid #999;
+    }
+    .tab:last-child {
+        border-bottom: none;
+    }
+}
+
+/* MÓVILES - 480px y menor */
+@media screen and (max-width: 480px) {
+    .contenedor_principal {
+        padding: 0 10px;
+    }
+    .encabezado {
+        padding: 15px 10px;
+        font-size: 16px;
+    }
+    .pie_pagina {
+        padding: 20px 10px;
+        text-align: center;
+    }
+    .titulo_principal {
+        font-size: 24px;
+        margin-bottom: 15px;
     }
     .titulo_secundario {
-        font-size: 24px;
-        margin-bottom: 30px;
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .subtitulo {
+        font-size: 1.2rem;
+    }
+    .contenedor_formulario,
+    .contenedor_formulario_grande,
+    .contenedor_formulario_lista_publica {
+        padding: 20px 15px;
+        margin: 0 10px;
+    }
+    .etiqueta_formulario_grande {
+        font-size: 20px;
+    }
+    .txt_campo_1, .txt_campo_2 {
+        font-size: 1.2rem;
+    }
+    .btn_primario,
+    .btn_secundario,
+    .btn_enviar {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin: 8px 0;
+    }
+    .btn_grande {
+        padding: 12px;
+        font-size: 18px;
+    }
+    .imagen_grande {
+        height: 200px;
+    }
+    .slide-text {
+        font-size: 18px;
+        padding: 8px 15px;
     }
     #anteriorBtn, #siguienteBtn {
         width: 35px;
         height: 35px;
-        font-size: 18px;
-    }
-    #anteriorBtn {
-        left: 5px;
-    }
-    #siguienteBtn {
-        right: 5px;
-    }
-    .texto_Descriptivo {
-        font-size: 0.95rem;
-        line-height: 1.5;
-    }
-    #grupo_trabajo {
-        margin-right: 400px;
-        width: 60px;
-        margin-top: -90px;
-    }
-    #grupo_trabajo h2 {
-        font-size: 12px;
-    }
-    .landing_navegacion_header {
-        margin-bottom: -10px;
-    }
-}
-@media (max-width: 320px) {
-    .imagen_grande {
-        height: 220px;
-    }
-    .slide-text {
-        font-size: 18px;
-        padding: 6px 12px;
-    }
-    .titulo_secundario {
-        font-size: 22px;
-        margin-bottom: 25px;
-    }
-    #anteriorBtn, #siguienteBtn {
-        width: 30px;
-        height: 30px;
         font-size: 16px;
     }
-    .texto_Descriptivo {
-        font-size: 0.9rem;
-        margin-bottom: 15px;
+    #anteriorBtn {
+        left: 10px;
+    }
+    #siguienteBtn {
+        right: 10px;
+    }
+    .tarjeta_dashboard {
+        padding: 15px;
+        min-height: 150px;
+    }
+    .tarjeta_dashboard h3 {
+        font-size: 16px;
+    }
+    .tarjeta_dashboard p {
+        font-size: 13px;
+    }
+    .contenedor_calendario {
+        padding: 15px;
+    }
+    .formulario_evento {
+        padding: 10px;
+    }
+    .formulario_evento h2 {
+        font-size: 18px;
+    }
+    .contenedor_transporte_horarios {
+        padding: 15px;
+    }
+    
+    .schedule table {
+        font-size: 12px;
+    }
+    .schedule th,.schedule td {
+        padding: 4px;
+    }
+    .contenedor_contactos_oficiales {
+        padding: 15px;
+    }
+    
+    .contacto-item h2 {
+        font-size: 1.1rem;
+    }
+    #mapa {
+        height: 150px;
+        margin: 15px 0;
+    }
+    table {
+        font-size: 12px;
+    }
+    th, td {
+        padding: 6px;
+    }
+    .anuncio_item {
+        padding: 10px;
+        margin-bottom: 8px;
+    }
+    .anuncio_meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
+
+/* MÓVILES PEQUEÑOS - 320px y menor */
+@media screen and (max-width: 320px) {
+    .contenedor_principal {
+        padding: 0 8px;
+    }
+    .encabezado {
+        padding: 10px 8px;
+        font-size: 14px;
+    }
+    .titulo_principal {
+        font-size: 20px;
+    }
+    .titulo_secundario {
+        font-size: 18px;
+    }
+    .contenedor_formulario,
+    .contenedor_formulario_grande,
+    .contenedor_formulario_lista_publica {
+        padding: 15px 10px;
+        margin: 0 8px;
+    }
+    .txt_campo_1, .txt_campo_2 {
+        font-size: 1rem;
+    }
+    .btn_primario,
+    .btn_secundario,
+    .btn_enviar {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    .imagen_grande {
+        height: 150px;
+    }
+    .slide-text {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+    .contenedor_calendario {
+        padding: 10px;
+    }
+    .calendario_visual {
+        min-height: 200px;
+    }
+    .contenedor_transporte_horarios {
+        padding: 10px;
+    }
+    .contenedor_contactos_oficiales {
+        padding: 10px;
+    }
+    #mapa {
+        height: 120px;
+        margin: 10px 0;
+    }
+}
+
+/* BREAKPOINT PARA TABLETS GRANDES - 1024px y menor */
+@media screen and (max-width: 1024px) {
+    .contenedor_formulario_grande {
+        width: 100%;
+        max-width: 800px;
+    }
+    .dashboard_grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .seccion_contenido {
+        gap: 20px;
+    }
+    .contenedor_transporte_horarios {
+        gap: 50px;
     }
     #grupo_trabajo {
-        margin-right: 280px;
-        width: 50px;
-        margin-top: -80px;
+        margin-right: 20px;
     }
-    #grupo_trabajo h2 {
-        font-size: 11px;
+}
+/* ORIENTACIÓN PARA MÓVILES */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .imagen_grande {
+        height: 180px;
+    }
+    .slide-text {
+        font-size: 20px;
+    }
+    .contenedor_calendario {
+        flex-direction: row;
+    }
+    .calendario_visual {
+        min-height: 200px;
     }
 }
