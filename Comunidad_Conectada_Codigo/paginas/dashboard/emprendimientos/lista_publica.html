@@ -6,71 +6,66 @@
     <title>Visualización de emprendimientos</title>
     <link rel="stylesheet" href="./../../../css/estilos.css">
 </head>
-
 <body>
-
-
     <!-- Header -->
     <header class="encabezado">
-                <h1>Comunidad-Conectada</h1>
-
-                
-
-                <div class="contenedor_enlace_inicio">
-                    <a href="./../dashboard.html" class="enlace_inicio"> ← Volver al inicio</a>
-                </div>
-            </header>
-
-     <!-- Tabs -->
+        <h1>Comunidad-Conectada</h1>
+        
+        <div class="contenedor_enlace_inicio">
+            <a href="./../dashboard.html" class="enlace_inicio"> ← Volver al inicio</a>
+        </div>
+    </header>
+    <!-- Tabs -->
     <div class="tab-container">
-    <button href="#" class="tab">Lista de Emprendimientos</button>
-    <button href="#" class="tab">Perfil de Negocio</button>
+        <button href="#" class="tab">
+            <div class="enlace_navegacion">
+                <h2><a href="./../emprendimientos/lista_publica.html">Lista de Emprendimientos</a></h2>
+            </div></button>
+        <button href="#" class="tab">
+        <div class="enlace_navegacion">
+            <h2><a href="./../emprendimientos/perfil.html">Perfil de Negocio</a></h2>
+        </div>
     </div>
-
     <div class="contenedor_pagina">
         <div class="contenido_pagina">
             <main class="contenido_principal">
                 <div class="contenedor_principal">
-
                     <!-- Titulo -->
-                        <form id="formulario_crear" novalidate>
-                            <h3 class="subtitulo_lista_publica">¡Explora y apoya los emprendimientos de tu comunidad!</h3>
-                        </form>
-                    </div>
+                    <form id="formulario_crear" novalidate>
+                        <h3 class="subtitulo_lista_publica">¡Explora y apoya los emprendimientos de tu comunidad!</h3>
+                    </form>
+                </div>
 
-                    <!-- Sección principal -->
-                    <div class="contenedor_formulario_lista_publica">
-                        <div class="seccion_formulario">
-                            <textarea class="txt_campo_1" readonly rows="5">[Nombre del Emprendimiento]
-Descripción del emprendimiento
-[Producto a la venta]
-Descripción producto
-[Precio Producto] </textarea>
-                                            
-                            <textarea class="txt_campo_2" readonly rows="5">[Nombre del Emprendimiento]
-Descripción del emprendimiento
-[Producto a la venta]
-Descripción producto
-[Precio Producto] </textarea>
-                            
-                            <p class="enlace_navegacion">
-                            Explora los descuentos y ofertas de cada emprendimiento aquí
-                            </p>
-                            
-
+                <!-- Sección principal -->
+                <div class="contenedor_formulario_lista_publica">
+                    <div class="seccion_formulario">
+                        <textarea class="txt_campo_1" readonly rows="5">
+                        [Nombre del Emprendimiento]
+                        Descripción del emprendimiento
+                        [Producto a la venta]
+                        Descripción producto
+                        [Precio Producto]</textarea>
+                                        
+                        <textarea class="txt_campo_2" readonly rows="5">
+                        [Nombre del Emprendimiento]
+                        Descripción del emprendimiento
+                        [Producto a la venta]
+                        Descripción producto
+                        [Precio Producto]</textarea>
+                        <div class="subtitulo">
+                            <h3>Explora los descuentos y ofertas de cada emprendimiento<div class="enlace_navegacion">
+                                <a href="#" class="enlace_navegacion"><h2>Aquí</h2></a>
+                             </div></h3>
                         </div>
                     </div>
-
+                </div>
             </main>
         </div>
-
-
-
-            <footer class="pie_pagina">
+        <footer class="pie_pagina">
             <p>@PCode</p>
-            </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/main.js"></script>
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script src="/js/main.js"></script>
+    </div>
 </body>
 </html>
