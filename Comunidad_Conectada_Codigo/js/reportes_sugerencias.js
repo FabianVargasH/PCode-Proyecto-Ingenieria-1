@@ -1,105 +1,181 @@
-// Se agrega un event listener al formulario con id "formReporte" para ejecutar lógica cuando se intente enviar
-document.getElementById("formReporte").addEventListener("submit", function (e) {
-    e.preventDefault(); // Se previene el envío automático del formulario (submit)
+// Referencias a elementos del formulario
+const formulario = document.getElementById("formReporte");
+const camposFormulario = {
+    fecha: document.getElementById("fechaReporte"),
+    descripcion: document.getElementById("descripcion"),
+    prioridad: document.getElementById("prioridad")
+};
 
-    // Se obtienen las referencias a cada campo del formulario
-    const campos = {
-        fecha: document.getElementById("fechaReporte"),
-        descripcion: document.getElementById("descripcion"),
-        prioridad: document.getElementById("prioridad"),
-        visibilidad: document.querySelector('input[name="visibilidad"]:checked') // valor solo si está seleccionado
-    };
-
-    // Antes de validar, se limpian errores visuales previos (mensajes de error y bordes rojos)
-    document.querySelectorAll(".error-message").forEach(msg => msg.remove()); // quitar mensajes anteriores
-    document.querySelectorAll(".txt_campo").forEach(campo => campo.style.borderColor = ""); // restaurar bordes
-
-    const errores = []; // Arreglo donde almacenaremos los errores encontrados
-
-    // ======================
-    // VALIDACIÓN DE FECHA
-    // ======================
-
-    // Obtener la fecha actual y "normalizarla" (sin horas) para comparación
+// Reglas de validación estructuradas
+const reglasValidacion = {
+    fecha: (campoInput) => {
+    const valorIngresado = campoInput.value.trim();
+    
+    if (!valorIngresado) {
+        return "Debe seleccionar una fecha";
+    }
+    
     const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0); // pone horas en 00:00:00 para evitar errores por diferencia horaria
-
-    // Se convierte el valor del input en un objeto Date para compararlo con hoy
-    const fechaSeleccionada = new Date(campos.fecha.value);
+    hoy.setHours(0, 0, 0, 0);
+    const partesFecha = valorIngresado.split("-");
+    const fechaSeleccionada = new Date(
+        parseInt(partesFecha[0]), 
+        parseInt(partesFecha[1]) - 1, 
+        parseInt(partesFecha[2])
+    );
     fechaSeleccionada.setHours(0, 0, 0, 0);
 
-    if (!campos.fecha.value) {
-        errores.push({ campo: campos.fecha, mensaje: "Debe seleccionar una fecha" });
-    } else if (fechaSeleccionada < hoy) {
-        errores.push({ campo: campos.fecha, mensaje: "La fecha no puede ser anterior a hoy" });
+    if (isNaN(fechaSeleccionada.getTime())) {
+        return "La fecha ingresada no es válida";
+    }
+    
+    if (fechaSeleccionada < hoy) {
+        return "La fecha no puede ser anterior a hoy";
     }
 
-    // =========================
-    // VALIDACIÓN DE DESCRIPCIÓN
-    // =========================
-
-    const descripcionTexto = campos.descripcion.value.trim();
-
-    if (descripcionTexto === "") {
-        errores.push({ campo: campos.descripcion, mensaje: "La descripción es obligatoria" });
-    } else if (descripcionTexto.length > 100) {
-        errores.push({ campo: campos.descripcion, mensaje: "La descripción no debe superar los 100 caracteres" });
+    return true;
+    },
+    
+    descripcion: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "La descripción es obligatoria";
+        }
+        
+        if (valorIngresado.length > 100) {
+            return "La descripción no debe superar los 100 caracteres";
+        }
+        
+        return true;
+    },
+    
+    prioridad: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "Debe seleccionar un nivel de prioridad";
+        }
+        
+        return true;
     }
+};
 
-    // ==============================
-    // VALIDACIÓN DE PRIORIDAD (select)
-    // ==============================
-    if (!campos.prioridad.value) {
-        errores.push({ campo: campos.prioridad, mensaje: "Debe seleccionar un nivel de prioridad" });
+// Función para marcar campo con error (sin mostrar texto)
+const marcarCampoConError = (elementoInput, tieneError) => {
+    if (tieneError) {
+        elementoInput.classList.add("error");
+        elementoInput.style.borderColor = 'red';
+    } else {
+        elementoInput.classList.remove('error');
+        elementoInput.style.borderColor = '';
     }
+};
 
-    // ============================
-    // VALIDACIÓN DE VISIBILIDAD (radio)
-    // ============================
-    if (!campos.visibilidad) {
-        errores.push({
-            campo: document.querySelector('input[name="visibilidad"]').parentElement,
-            mensaje: "Debe seleccionar una opción de visibilidad"
-        });
+// Función para validar la selección de visibilidad
+const validarSeleccionVisibilidad = () => {
+    const visibilidadSeleccionada = document.querySelector('input[name="visibilidad"]:checked');
+    return visibilidadSeleccionada ? true : false;
+};
+
+// Función principal de validación
+const ejecutarValidacionCompleta = () => {
+    let primerErrorEncontrado = null;
+    let formularioEsValido = true;
+    
+    // Validar visibilidad
+    if (!validarSeleccionVisibilidad()) {
+        formularioEsValido = false;
+        if (!primerErrorEncontrado) {
+            primerErrorEncontrado = { mensaje: "Debe seleccionar una opción de visibilidad" };
+        }
     }
-
-    // ============================
-    // MANEJO DE RESULTADOS
-    // ============================
-
-    // Si hay errores, se muestran debajo de los campos correspondientes y se colorean en rojo
-    if (errores.length > 0) {
-        errores.forEach(({ campo, mensaje }) => {
-            const span = document.createElement("span");
-            span.className = "error-message";
-            span.style.color = "red";
-            span.style.fontSize = "12px";
-            span.textContent = mensaje;
-            campo.parentElement.appendChild(span);
-
-            // Si el campo tiene la clase visual .txt_campo se le marca borde rojo
-            if (campo.classList.contains("txt_campo")) {
-                campo.style.borderColor = "red";
+    
+    // Validar campos del formulario
+    for (const nombreCampo in reglasValidacion) {
+        const elementoCampo = camposFormulario[nombreCampo];
+        
+        if (elementoCampo) {
+            const resultadoValidacion = reglasValidacion[nombreCampo](elementoCampo);
+            
+            if (resultadoValidacion !== true) {
+                marcarCampoConError(elementoCampo, true);
+                formularioEsValido = false;
+                if (!primerErrorEncontrado) {
+                    primerErrorEncontrado = { referenciaHTML: elementoCampo, mensaje: resultadoValidacion };
+                }
+            } else {
+                marcarCampoConError(elementoCampo, false);
             }
-        });
+        }
+    }
+    
+    return formularioEsValido ? null : primerErrorEncontrado;
+};
 
-        // Mensaje de advertencia general con SweetAlert2
-        Swal.fire({
-            title: "Formulario inválido",
-            text: "Por favor, revisa los campos marcados en rojo.",
-            icon: "error"
-        });
+// Función para limpiar el formulario
+const limpiarCampos = () => {
+    // Limpiar los inputs
+    Object.values(camposFormulario).forEach(elementoCampo => {
+        if (elementoCampo) {
+            elementoCampo.value = '';
+            marcarCampoConError(elementoCampo, false);
+        }
+    });
+    
+    // Limpiar selección de visibilidad
+    const botonesRadioVisibilidad = document.querySelectorAll('input[name="visibilidad"]');
+    botonesRadioVisibilidad.forEach(botonRadio => {
+        botonRadio.checked = false;
+    });
+    
+    // Resetear el formulario completo
+    formulario.reset();
+};
 
+// Desactivar validaciones HTML5 nativas
+formulario.setAttribute('novalidate', 'true');
+
+// Event listener principal del formulario
+formulario.addEventListener("submit", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const errorEncontrado = ejecutarValidacionCompleta();
+    
+    if (errorEncontrado) {
+        // Usar SweetAlert2 para mostrar errores
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: "Error en el formulario",
+                text: errorEncontrado.mensaje,
+                icon: "error",
+                confirmButtonColor: '#dc3545'
+            });
+        } else {
+            alert("Error: " + errorEncontrado.mensaje);
+        }
+        
+        // Hacer scroll al primer campo con error si existe
+        if (errorEncontrado.referenciaHTML) {
+            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorEncontrado.referenciaHTML.focus();
+        }
     } else {
         // Si no hay errores: mensaje de éxito y reinicio del formulario
-        Swal.fire({
-            title: "¡Éxito!",
-            text: "Tu reporte ha sido enviado correctamente.",
-            icon: "success"
-        }).then(() => {
-            // Limpiar campos y restaurar bordes
-            document.getElementById("formReporte").reset();
-            document.querySelectorAll(".txt_campo").forEach(campo => campo.style.borderColor = "");
-        });
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: "¡Éxito!",
+                text: "Tu reporte ha sido enviado correctamente.",
+                icon: "success",
+                confirmButtonColor: '#28a745',
+                confirmButtonText: 'Continuar'
+            }).then(() => {
+                limpiarCampos();
+            });
+        } else {
+            alert("¡Éxito! Tu reporte ha sido enviado correctamente.");
+            limpiarCampos();
+        }
     }
 });
