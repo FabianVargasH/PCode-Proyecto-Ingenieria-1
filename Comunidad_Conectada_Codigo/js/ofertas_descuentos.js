@@ -1,92 +1,240 @@
-// Se agrega un event listener al formulario con id "formOferta" para ejecutar lógica cuando se intente enviar
-document.getElementById("formOferta").addEventListener("submit", function (e) {
-    e.preventDefault(); // Se evita que el formulario se envíe automáticamente (evita recarga de página)
+// Referencias a elementos del formulario
+const formulario = document.getElementById("formOferta");
+const camposFormulario = {
+    emprendimiento: document.getElementById("selectEmprendimiento"),
+    producto: document.getElementById("txtProducto"),
+    descripcion: document.getElementById("txtDescripcion"),
+    oferta: document.getElementById("txtOferta"),
+    descripcionOferta: document.getElementById("txtDescripcionOferta"),
+    condiciones: document.getElementById("txtCondiciones"),
+    duracion: document.getElementById("txtDuracion")
+};
 
-    // Se obtienen las referencias a todos los campos que deben validarse
-    const campos = {
-        emprendimiento: document.getElementById("selectEmprendimiento"),
-        producto: document.getElementById("txtProducto"),
-        descripcion: document.getElementById("txtDescripcion"),
-        oferta: document.getElementById("txtOferta"),
-        descripcionOferta: document.getElementById("txtDescripcionOferta"),
-        condiciones: document.getElementById("txtCondiciones"),
-        duracion: document.getElementById("txtDuracion"),
-    };
-
-    const errores = []; // Arreglo que almacenará objetos con campos y mensajes si hay errores
-
-    // Validar que se haya seleccionado un emprendimiento
-    if (!campos.emprendimiento.value) {
-        errores.push({ campo: campos.emprendimiento, mensaje: "Debe seleccionar un emprendimiento" });
+// Reglas de validación estructuradas
+const reglasValidacion = {
+    emprendimiento: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "Debe seleccionar un emprendimiento";
+        }
+        
+        return true;
+    },
+    
+    producto: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "El nombre del producto es obligatorio";
+        }
+        
+        if (valorIngresado.length < 2) {
+            return "El nombre del producto debe tener al menos 2 caracteres";
+        }
+        
+        if (valorIngresado.length > 50) {
+            return "El nombre del producto debe tener máximo 50 caracteres";
+        }
+        
+        return true;
+    },
+    
+    descripcion: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "La descripción del producto es obligatoria";
+        }
+        
+        if (valorIngresado.length < 10) {
+            return "La descripción del producto debe tener al menos 10 caracteres";
+        }
+        
+        if (valorIngresado.length > 200) {
+            return "La descripción del producto debe tener máximo 200 caracteres";
+        }
+        
+        return true;
+    },
+    
+    oferta: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "La oferta o descuento es obligatorio";
+        }
+        
+        if (valorIngresado.length < 2) {
+            return "La oferta debe tener al menos 2 caracteres";
+        }
+        
+        if (valorIngresado.length > 30) {
+            return "La oferta o descuento debe tener máximo 30 caracteres";
+        }
+        
+        return true;
+    },
+    
+    descripcionOferta: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "La descripción de la oferta es obligatoria";
+        }
+        
+        if (valorIngresado.length < 10) {
+            return "La descripción de la oferta debe tener al menos 10 caracteres";
+        }
+        
+        if (valorIngresado.length > 150) {
+            return "La descripción de la oferta debe tener máximo 150 caracteres";
+        }
+        
+        return true;
+    },
+    
+    condiciones: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "Las condiciones son obligatorias";
+        }
+        
+        if (valorIngresado.length < 5) {
+            return "Las condiciones deben tener al menos 5 caracteres";
+        }
+        
+        if (valorIngresado.length > 120) {
+            return "Las condiciones deben tener máximo 120 caracteres";
+        }
+        
+        return true;
+    },
+    
+    duracion: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (!valorIngresado) {
+            return "La duración es obligatoria";
+        }
+        
+        if (!/^\d+$/.test(valorIngresado)) {
+            return "La duración debe ser un número entero";
+        }
+        
+        const duracionNum = parseInt(valorIngresado);
+        
+        if (duracionNum < 1) {
+            return "La duración debe ser mayor a 0 días";
+        }
+        
+        if (duracionNum > 365) {
+            return "La duración no puede ser mayor a 365 días";
+        }
+        
+        return true;
     }
+};
 
-    // Validar que el nombre del producto tenga como máximo 15 caracteres
-    if (campos.producto.value.trim().length > 15) {
-        errores.push({ campo: campos.producto, mensaje: "El nombre del producto debe tener máximo 15 caracteres" });
+// Función para marcar campo con error 
+const marcarCampoConError = (elementoInput, tieneError) => {
+    if (tieneError) {
+        elementoInput.classList.add("error");
+        elementoInput.style.borderColor = 'red';
+    } else {
+        elementoInput.classList.remove('error');
+        elementoInput.style.borderColor = '';
     }
+};
 
-    // Validar que la oferta tenga como máximo 20 caracteres
-    if (campos.oferta.value.trim().length > 20) {
-        errores.push({ campo: campos.oferta, mensaje: "La oferta o descuento debe tener máximo 20 caracteres" });
+// Función principal de validación
+const ejecutarValidacionCompleta = () => {
+    let primerErrorEncontrado = null;
+    let formularioEsValido = true;
+    
+    // Validar campos del formulario en orden
+    for (const nombreCampo in reglasValidacion) {
+        const elementoCampo = camposFormulario[nombreCampo];
+        
+        if (elementoCampo) {
+            const resultadoValidacion = reglasValidacion[nombreCampo](elementoCampo);
+            
+            if (resultadoValidacion !== true) {
+                marcarCampoConError(elementoCampo, true);
+                formularioEsValido = false;
+                if (!primerErrorEncontrado) {
+                    primerErrorEncontrado = { referenciaHTML: elementoCampo, mensaje: resultadoValidacion };
+                }
+            } else {
+                marcarCampoConError(elementoCampo, false);
+            }
+        }
     }
+    
+    return formularioEsValido ? null : primerErrorEncontrado;
+};
 
-    // Validar que la descripción del producto tenga como máximo 100 caracteres
-    if (campos.descripcion.value.trim().length > 100) {
-        errores.push({ campo: campos.descripcion, mensaje: "La descripción del producto debe tener máximo 100 caracteres" });
-    }
-
-    // Validar que la descripción de la oferta tenga como máximo 100 caracteres
-    if (campos.descripcionOferta.value.trim().length > 100) {
-        errores.push({ campo: campos.descripcionOferta, mensaje: "La descripción de la oferta debe tener máximo 100 caracteres" });
-    }
-
-    // Validar que las condiciones tengan como máximo 100 caracteres
-    if (campos.condiciones.value.trim().length > 100) {
-        errores.push({ campo: campos.condiciones, mensaje: "Las condiciones deben tener máximo 100 caracteres" });
-    }
-
-    // Validar que la duración sea un número entero menor o igual a 365
-    const duracionValor = campos.duracion.value.trim();
-    if (!/^\d+$/.test(duracionValor) || parseInt(duracionValor) > 365) {
-        errores.push({ campo: campos.duracion, mensaje: "La duración debe ser un número no mayor a 365" });
-    }
-
-    // Quitar todos los mensajes de error anteriores antes de volver a validar
+// Función para limpiar el formulario
+const limpiarCampos = () => {
+    // Limpiar los inputs
+    Object.values(camposFormulario).forEach(elementoCampo => {
+        if (elementoCampo) {
+            elementoCampo.value = '';
+            marcarCampoConError(elementoCampo, false);
+        }
+    });
+    
+    // Resetear el formulario completo
+    formulario.reset();
+    
+    // Limpiar también cualquier mensaje de error que pudiera quedar
     document.querySelectorAll(".error-message").forEach(msg => msg.remove());
+};
 
-    // Si hay errores, mostrar mensajes y marcar bordes en rojo
-    if (errores.length > 0) {
-        errores.forEach(({ campo, mensaje }) => {
-            const span = document.createElement("span"); // Crear elemento span para mensaje
-            span.className = "error-message";
-            span.style.color = "red";
-            span.style.fontSize = "12px";
-            span.textContent = mensaje;
+// Desactivar validaciones HTML5 nativas
+formulario.setAttribute('novalidate', 'true');
 
-            campo.parentElement.appendChild(span); // Agregar mensaje al DOM
-            campo.style.borderColor = "red"; // Marcar campo con borde rojo
-        });
-
-        // Mostrar alerta general si SweetAlert2 está disponible
+// Event listener principal del formulario
+formulario.addEventListener("submit", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const errorEncontrado = ejecutarValidacionCompleta();
+    
+    if (errorEncontrado) {
+        // Usar SweetAlert2 para mostrar errores
         if (typeof Swal !== 'undefined') {
             Swal.fire({
-                title: "Formulario inválido",
-                text: "Por favor, revisa los campos marcados en rojo.",
-                icon: "error"
+                title: "Error en el formulario",
+                text: errorEncontrado.mensaje,
+                icon: "error",
+                confirmButtonColor: '#dc3545'
             });
+        } else {
+            alert("Error: " + errorEncontrado.mensaje);
         }
-
+        
+        // Hacer scroll al primer campo con error si existe
+        if (errorEncontrado.referenciaHTML) {
+            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorEncontrado.referenciaHTML.focus();
+        }
     } else {
-        // Si no hay errores, mostrar mensaje de éxito con SweetAlert2
-        Swal.fire({
-            title: "¡Éxito!",
-            text: "La oferta ha sido registrada correctamente.",
-            icon: "success"
-        }).then(() => {
-            // Limpiar el formulario y restaurar bordes
-            document.getElementById("formOferta").reset();
-            document.querySelectorAll(".txt_campo").forEach(campo => campo.style.borderColor = "");
-        });
+        // Si no hay errores: mensaje de éxito y reinicio del formulario
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: "¡Éxito!",
+                text: "La oferta ha sido registrada correctamente.",
+                icon: "success",
+                confirmButtonColor: '#28a745',
+                confirmButtonText: 'Continuar'
+            }).then(() => {
+                limpiarCampos();
+            });
+        } else {
+            alert("¡Éxito! La oferta ha sido registrada correctamente.");
+            limpiarCampos();
+        }
     }
 });
-
