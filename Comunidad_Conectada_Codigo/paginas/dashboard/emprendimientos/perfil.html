@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de emprendimientos</title>
-    <link rel="stylesheet" href="/css/estilos.css">
+    <link rel="stylesheet" href="./../../../css/estilos.css">
 </head>
 <body>
     <div class="contenedor_pagina">
@@ -12,14 +12,14 @@
             <header class="encabezado">
                 <h1>Comunidad-Conectada</h1>
                 <div class="contenedor_enlace_inicio">
-                    <a href="/paginas/dashboard/dashboard.html" class="enlace_inicio"> ← Volver al inicio</a>
+                    <a href="./../dashboard.html" class="enlace_inicio"> ← Volver al inicio</a>
                 </div>
             </header>
             <!-- Tabs -->
             <div class="tab-container">
                 <button href="#" class="tab">
                     <div class="enlace_navegacion">
-                        <h2><a href="/paginas/dashboard/emprendimientos/lista_publica.html">Lista de Emprendimientos</a></h2>
+                        <h2><a href="./../emprendimientos/lista_publica.html">Lista de Emprendimientos</a></h2>
                     </div>
                 </button>
                 <button href="#" class="tab">
@@ -40,7 +40,7 @@
                             <h2 class="titulo_principal">¡Crea tú Emprendimiento!</h2>
                             
                             <div class="seccion_formulario">
-                                <label class="etiqueta_formulario" for="nombre_negocio">Nombre del negocio*</label>
+                                <label class="etiqueta_formulario" for="txtNombreCompleto">Nombre del negocio*</label>
                                 <input type="text" class="txt_campo" id="txtNombreCompleto" name="nombre_negocio" required>
                                 <span class="error-message" aria-live="polite"></span>
                             </div>
@@ -78,14 +78,14 @@
                             </div>
 
                             <div class="seccion_formulario">
-                                <label class="etiqueta_formulario" for="nombre_producto">Nombre del producto*</label>
+                                <label class="etiqueta_formulario" for="txtNombreCompleto1">Nombre del producto*</label>
                                 <input type="text" class="txt_campo" id="txtNombreCompleto1" name="nombre_producto" placeholder="0/50 caracteres" required maxlength="50">
                                 <span class="error-message" aria-live="polite"></span>
                             </div>
 
                             <div class="seccion_formulario">
                                 <label class="etiqueta_formulario" for="descripcion_producto">Descripción*</label>
-                                <input class="txt_campo" id="descripcion_producto" name="descripcion_producto" required placeholder="0/300 caracteres" maxlength="300" rows="3"></textarea>
+                                <textarea class="txt_campo" id="descripcion_producto" name="descripcion_producto" required placeholder="0/300 caracteres" maxlength="300" rows="3"></textarea>
                                 <span class="error-message" aria-live="polite"></span>
                             </div>
 
@@ -138,6 +138,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/registro.js"></script>
+    <script src="/js/emprendimientos.js"></script>
 </body>
 </html>

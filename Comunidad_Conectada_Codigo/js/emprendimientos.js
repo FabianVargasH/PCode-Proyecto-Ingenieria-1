@@ -1,82 +1,123 @@
-const formulario = document.querySelector("formulario_principal");
-const formulario1 = document.querySelector("formulario_principal1");
-const btnRegistrarse = document.getElementById("btnRegistrarse");
-const btnRegistrarse1 = document.getElementById("btnRegistrarse1");
+// Elementos del formulario de crear emprendimiento
+const formularioEmprendimiento = document.getElementById("formulario_principal");
+const btnCrearEmprendimiento = document.getElementById("btnRegistrarse");
 
-const camposFormulario = {
-    nombre: document.getElementById("txtNombreCompleto"),
-    nombre1: document.getElementById("txtNombreCompleto1"),
-    descripcion: document.getElementById("descripcion_producto"),
-    precio: document.getElementById("precio"),
-}
+// Elementos del formulario de productos
+const formularioProducto = document.getElementById("formulario_principal1");
+const btnAgregarProducto = document.getElementById("btnRegistrarse1");
 
-//Validaciones
-const reglasValidacionCrear = {
-    nombre: (campoInput) => {
-        const valorIngresado = campoInput.value.trim(); //trim para quitar lo de los espacios en blanco y caracteres especiales
-        const palabrasEncontradas = valorIngresado.split(/\s+/).filter(palabra => palabra.length > 0);
+const camposFormularioEmprendimiento = {
+    nombreNegocio: document.getElementById("txtNombreCompleto"),
+    descripcionNegocio: document.getElementById("descripcion_negocio")
+};
+
+const camposFormularioProducto = {
+    nombreProducto: document.getElementById("txtNombreCompleto1"),
+    descripcionProducto: document.getElementById("descripcion_producto"),
+    precio: document.getElementById("precio")
+};
+
+// Reglas de validación para crear emprendimiento
+const reglasValidacionEmprendimiento = {
+    nombreNegocio: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
         if (!valorIngresado) {
-            return "Debe digitar un nombre de negocio";
+            return "Debe ingresar el nombre del negocio";
         }
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(valorIngresado)) {
-            return "El nombre solo puede contener letras y espacios.";
+        
+        if (valorIngresado.length < 3) {
+            return "El nombre del negocio debe tener al menos 3 caracteres";
         }
+        
+        if (valorIngresado.length > 100) {
+            return "El nombre del negocio no puede exceder los 100 caracteres";
+        }
+        
+        return true;
+    },
+    
+    descripcionNegocio: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
+        if (valorIngresado && valorIngresado.length < 10) {
+            return "La descripción debe tener al menos 10 caracteres";
+        }
+        
+        if (valorIngresado.length > 500) {
+            return "La descripción no puede exceder los 500 caracteres";
+        }
+        
         return true;
     }
 };
 
-const reglasValidacionAgregar = {
-    nombre1: (campoInput) => {
-        const valorIngresado = campoInput.value.trim(); //trim para quitar lo de los espacios en blanco y caracteres especiales
-        const palabrasEncontradas = valorIngresado.split(/\s+/).filter(palabra => palabra.length > 0);
+// Reglas de validación para productos
+const reglasValidacionProducto = {
+    nombreProducto: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
         if (!valorIngresado) {
-            return "Debe digitar un nombre de producto";
+            return "Debe ingresar el nombre del producto";
         }
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(valorIngresado)) {
-            return "El nombre solo puede contener letras y espacios.";
-        }   
+        
+        if (valorIngresado.length < 3) {
+            return "El nombre del producto debe tener al menos 3 caracteres";
+        }
+        
+        if (valorIngresado.length > 50) {
+            return "El nombre del producto no puede exceder los 50 caracteres";
+        }
+        
         return true;
     },
-    descripcion: (campoInput) => {
-        const valorIngresado = campoInput.value.trim(); //trim para quitar lo de los espacios en blanco y caracteres especiales
-        const palabrasEncontradas = valorIngresado.split(/\s+/).filter(palabra => palabra.length > 0);
+    
+    descripcionProducto: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        
         if (!valorIngresado) {
-            return "Debe digitar una descripcion de producto";
+            return "Debe ingresar la descripción del producto";
         }
-        if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(valorIngresado)) {
-            return "El nombre solo puede contener letras y espacios.";
-        }   
+        
+        if (valorIngresado.length < 20) {
+            return "La descripción debe tener al menos 20 caracteres";
+        }
+        
+        if (valorIngresado.length > 300) {
+            return "La descripción no puede exceder los 300 caracteres";
+        }
+        
         return true;
     },
+    
     precio: (campoInput) => {
         const valorIngresado = campoInput.value.trim();
-        const valorNumerico = parseFloat(valorIngresado);
         
         if (!valorIngresado) {
-            return "Debe ingresar un precio";
+            return "Debe ingresar el precio del producto";
         }
         
-        if (isNaN(valorNumerico)) {
+        const precio = parseFloat(valorIngresado);
+        
+        if (isNaN(precio)) {
             return "El precio debe ser un número válido";
         }
         
-        if (valorNumerico <= 0.000) {
-            return "El precio debe ser mayor que 0.000";
-        }
-        
-        if (valorNumerico > 1000000) {
-            return "El precio no puede ser mayor a 1 millón";
+        if (precio <= 0) {
+            return "El precio debe ser mayor a 0";
         }
         
         return true;
     }
 };
 
-btnRegistrarse.addEventListener("click", (eventoClickCrear) => {
-    eventoClickCrear.preventDefault();
-    const errorEncontrado = ejecutarValidacionCompletaCrear();
+// Event listener para el botón de crear emprendimiento
+btnCrearEmprendimiento.addEventListener("click", (eventoClick) => {
+    eventoClick.preventDefault();
+    const errorEncontrado = ejecutarValidacionEmprendimiento();
+    
     if (errorEncontrado) {
-        // Usar SweetAlert2 para que se vea más bonito
+        // Usar SweetAlert2 para mostrar el error
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: "Error en el formulario",
@@ -87,38 +128,37 @@ btnRegistrarse.addEventListener("click", (eventoClickCrear) => {
         } else {
             alert("Error: " + errorEncontrado.mensaje);
         }
-        // Hacer scroll al primer campo con error si existe
+        
         if (errorEncontrado.referenciaHTML) {
             errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
             errorEncontrado.referenciaHTML.focus();
         }
     } else {
+        // Emprendimiento creado exitosamente
         if (typeof Swal !== 'undefined') {
             Swal.fire({
-                title: "¡Registro exitoso!",
-                text: "Su emprendimiento ha sido creado exitosamente.",
+                title: "¡Emprendimiento creado exitosamente!",
+                text: "El emprendimiento ha sido registrado y está pendiente de aprobación.",
                 icon: "success",
                 confirmButtonColor: '#28a745',
-                confirmButtonText: 'Continuar' 
+                confirmButtonText: 'Continuar'
             }).then(() => {
-                limpiarCampos();
-                //Dirigir al usuario al dashboard despues del registro
-                window.location.href = '../dashboard/dashboard.html'; 
+                limpiarCamposEmprendimiento();
             });
-        }else {
-            alert("¡Registro exitoso! Su información ha sido registrada correctamente.");
-            limpiarCampos();
-            window.location.href = '../dashboard/dashboard.html';
+        } else {
+            alert("¡Emprendimiento creado exitosamente! El emprendimiento ha sido registrado y está pendiente de aprobación.");
+            limpiarCamposEmprendimiento();
         }
     }
 });
 
-
-btnRegistrarse1.addEventListener("click", (eventoClickAgregar) => {
-    eventoClickAgregar.preventDefault();
-    const errorEncontrado = ejecutarValidacionCompletaAgregar();
+// Event listener para el botón de agregar producto
+btnAgregarProducto.addEventListener("click", (eventoClick) => {
+    eventoClick.preventDefault();
+    const errorEncontrado = ejecutarValidacionProducto();
+    
     if (errorEncontrado) {
-        // Usar SweetAlert2 para que se vea más bonito
+        // Usar SweetAlert2 para mostrar el error
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: "Error en el formulario",
@@ -129,35 +169,35 @@ btnRegistrarse1.addEventListener("click", (eventoClickAgregar) => {
         } else {
             alert("Error: " + errorEncontrado.mensaje);
         }
+        
         // Hacer scroll al primer campo con error si existe
         if (errorEncontrado.referenciaHTML) {
             errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
             errorEncontrado.referenciaHTML.focus();
         }
     } else {
+        // Producto agregado exitosamente
         if (typeof Swal !== 'undefined') {
             Swal.fire({
-                title: "¡Registro exitoso!",
-                text: "Su producto ha sido creado exitosamente.",
+                title: "¡Producto agregado exitosamente!",
+                text: "El producto ha sido registrado y está pendiente de aprobación.",
                 icon: "success",
                 confirmButtonColor: '#28a745',
-                confirmButtonText: 'Continuar' 
+                confirmButtonText: 'Continuar'
             }).then(() => {
-                limpiarCampos();
-                //Dirigir al usuario al dashboard despues del registro
-                window.location.href = '../dashboard/dashboard.html'; 
+                limpiarCamposProducto();
             });
-        }else {
-            alert("¡Registro exitoso! Su información ha sido registrada correctamente.");
-            limpiarCampos();
-            window.location.href = '../dashboard/dashboard.html';
+        } else {
+            alert("¡Producto agregado exitosamente! El producto ha sido registrado y está pendiente de aprobación.");
+            limpiarCamposProducto();
         }
     }
 });
 
-//Funcion para mostrar o esconder errores
-const mostrarMensajeError = (elementoInput, mensajeError) => {
+// Función para mostrar o esconder errores en emprendimientos
+const mostrarMensajeErrorEmprendimiento = (elementoInput, mensajeError) => {
     let spanError = elementoInput.parentElement.querySelector('.error-message');
+    
     if (!spanError) {
         spanError = document.createElement('span');
         spanError.className = 'error-message';
@@ -167,6 +207,7 @@ const mostrarMensajeError = (elementoInput, mensajeError) => {
         spanError.style.marginTop = '5px';
         elementoInput.parentElement.appendChild(spanError);
     }
+    
     if (mensajeError) {
         elementoInput.classList.add("error");
         elementoInput.style.borderColor = 'red';
@@ -180,76 +221,269 @@ const mostrarMensajeError = (elementoInput, mensajeError) => {
     }
 };
 
+// Función para mostrar o esconder errores en productos
+const mostrarMensajeErrorProducto = (elementoInput, mensajeError) => {
+    let spanError = elementoInput.parentElement.querySelector('.error-message');
+    
+    if (!spanError) {
+        spanError = document.createElement('span');
+        spanError.className = 'error-message';
+        spanError.style.color = 'red';
+        spanError.style.fontSize = '12px';
+        spanError.style.display = 'block';
+        spanError.style.marginTop = '5px';
+        elementoInput.parentElement.appendChild(spanError);
+    }
+    
+    if (mensajeError) {
+        elementoInput.classList.add("error");
+        elementoInput.style.borderColor = 'red';
+        spanError.textContent = mensajeError;
+        spanError.style.display = 'block';
+    } else {
+        elementoInput.classList.remove('error');
+        elementoInput.style.borderColor = '';
+        spanError.textContent = '';
+        spanError.style.display = 'none';
+    }
+};
 
-//Funcion principal para validar el formulario crear emprendimiento
-const ejecutarValidacionCompletaCrear = () => {
+// Función principal para validar el formulario de emprendimiento
+const ejecutarValidacionEmprendimiento = () => {
     let primerErrorEncontrado = null;
     let formularioEsValido = true;
 
-    
-    //Validar campos del formulario
-    for (const nombreCampo in reglasValidacionCrear) {
-        const elementoCampo = camposFormulario[nombreCampo];
+    // Validar campos del formulario de emprendimiento
+    for (const nombreCampo in reglasValidacionEmprendimiento) {
+        const elementoCampo = camposFormularioEmprendimiento[nombreCampo];
 
         if (elementoCampo) {
-            const resultadoValidacion = reglasValidacionCrear[nombreCampo](elementoCampo);
+            const resultadoValidacion = reglasValidacionEmprendimiento[nombreCampo](elementoCampo);
             
             if (resultadoValidacion !== true) {
-                mostrarMensajeError(elementoCampo, resultadoValidacion);
+                mostrarMensajeErrorEmprendimiento(elementoCampo, resultadoValidacion);
                 formularioEsValido = false;
                 if (!primerErrorEncontrado) {
                     primerErrorEncontrado = { referenciaHTML: elementoCampo, mensaje: resultadoValidacion };
                 }
             } else {
-                mostrarMensajeError(elementoCampo, null);
+                mostrarMensajeErrorEmprendimiento(elementoCampo, null);
             }
         }
     }
+    
     return formularioEsValido ? null : primerErrorEncontrado;
 };
 
+// Función para validar el dropdown de emprendimiento
+const validarSeleccionEmprendimiento = () => {
+    const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
+    const contenedorSelect = selectEmprendimiento.parentElement;
+    let contenedorError = contenedorSelect.querySelector('.error-message');
 
-//validacion de formulario actuazalizar emprendimiento
-const ejecutarValidacionCompletaAgregar = () => {
+    if (!contenedorError) {
+        contenedorError = document.createElement('div');
+        contenedorError.className = 'error-message';
+        contenedorError.style.color = '#e74c3c';
+        contenedorError.style.fontSize = '12px';
+        contenedorError.style.marginTop = '5px';
+        contenedorSelect.appendChild(contenedorError);
+    }
+
+    if (!selectEmprendimiento.value || selectEmprendimiento.value === "") {
+        contenedorError.textContent = 'Debe seleccionar un emprendimiento';
+        contenedorError.style.display = 'block';
+        selectEmprendimiento.style.borderColor = 'red';
+        return false;
+    } else {
+        contenedorError.textContent = '';
+        contenedorError.style.display = 'none';
+        selectEmprendimiento.style.borderColor = '';
+        return true;
+    }
+};
+
+// Función principal para validar el formulario de productos
+const ejecutarValidacionProducto = () => {
     let primerErrorEncontrado = null;
     let formularioEsValido = true;
 
-    
-    //Validar campos del formulario
-    for (const nombreCampo in reglasValidacionAgregar) {
-        const elementoCampo = camposFormulario[nombreCampo];
+    // Validar selección de emprendimiento
+    if (!validarSeleccionEmprendimiento()) {
+        formularioEsValido = false;
+        if (!primerErrorEncontrado) {
+            primerErrorEncontrado = { mensaje: "Debe seleccionar un emprendimiento" };
+        }
+    }
+
+    // Validar campos del formulario de productos
+    for (const nombreCampo in reglasValidacionProducto) {
+        const elementoCampo = camposFormularioProducto[nombreCampo];
 
         if (elementoCampo) {
-            const resultadoValidacion = reglasValidacionAgregar[nombreCampo](elementoCampo);
+            const resultadoValidacion = reglasValidacionProducto[nombreCampo](elementoCampo);
             
             if (resultadoValidacion !== true) {
-                mostrarMensajeError(elementoCampo, resultadoValidacion);
+                mostrarMensajeErrorProducto(elementoCampo, resultadoValidacion);
                 formularioEsValido = false;
                 if (!primerErrorEncontrado) {
                     primerErrorEncontrado = { referenciaHTML: elementoCampo, mensaje: resultadoValidacion };
                 }
             } else {
-                mostrarMensajeError(elementoCampo, null);
+                mostrarMensajeErrorProducto(elementoCampo, null);
             }
         }
     }
+    
     return formularioEsValido ? null : primerErrorEncontrado;
 };
 
-
-// Función básica para marcar la opción seleccionada
-document.querySelectorAll('input[name="tipo_usuario_seleccionado"]').forEach(radio => {
-    radio.addEventListener('change', function() {
-        // Quitar marca de todas las tarjetas
-        document.querySelectorAll('.tarjeta').forEach(tarjeta => {
-            tarjeta.style.backgroundColor = '';
-            tarjeta.style.borderColor = '';
-        });
-        // Marcar la tarjeta seleccionada
-        if (this.checked) {
-            this.nextElementSibling.style.backgroundColor = '#60A5FA';
-            this.nextElementSibling.style.borderColor = '#1E3A8A';
+// Función para limpiar el formulario de emprendimiento
+const limpiarCamposEmprendimiento = () => {
+    // Limpiar los inputs
+    Object.values(camposFormularioEmprendimiento).forEach(elementoCampo => {
+        if (elementoCampo) {
+            elementoCampo.value = '';
+            mostrarMensajeErrorEmprendimiento(elementoCampo, null);
         }
     });
+};
+
+// Función para limpiar el formulario de productos
+const limpiarCamposProducto = () => {
+    // Limpiar los inputs
+    Object.values(camposFormularioProducto).forEach(elementoCampo => {
+        if (elementoCampo) {
+            if (elementoCampo.type === 'number') {
+                elementoCampo.value = '0.000';
+            } else {
+                elementoCampo.value = '';
+            }
+            mostrarMensajeErrorProducto(elementoCampo, null);
+        }
+    });
+
+    // Limpiar selección de emprendimiento
+    const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
+    if (selectEmprendimiento) {
+        selectEmprendimiento.selectedIndex = 0;
+        selectEmprendimiento.style.borderColor = '';
+        
+        // Limpiar error del select
+        const contenedorError = selectEmprendimiento.parentElement.querySelector('.error-message');
+        if (contenedorError) {
+            contenedorError.style.display = 'none';
+        }
+    }
+};
+
+// Agregar validación en tiempo real para mostrar contador de caracteres
+document.addEventListener('DOMContentLoaded', function() {
+    const nombreProductoInput = document.getElementById("txtNombreCompleto1");
+    const descripcionProductoInput = document.getElementById("descripcion_producto");
+    
+    // Actualizar placeholder con contador para nombre del producto
+    if (nombreProductoInput) {
+        nombreProductoInput.addEventListener('input', function() {
+            const longitudActual = this.value.length;
+            this.placeholder = `${longitudActual}/50 caracteres`;
+        });
+    }
+    
+    // Actualizar placeholder con contador para descripción
+    if (descripcionProductoInput) {
+        descripcionProductoInput.addEventListener('input', function() {
+            const longitudActual = this.value.length;
+            this.placeholder = `${longitudActual}/300 caracteres`;
+        });
+    }
 });
 
+// Validación en tiempo real para remover errores cuando el usuario corrige
+Object.values(camposFormularioEmprendimiento).forEach(campo => {
+    if (campo) {
+        campo.addEventListener('input', function() {
+            const nombreCampo = Object.keys(camposFormularioEmprendimiento).find(key => camposFormularioEmprendimiento[key] === campo);
+            if (nombreCampo && reglasValidacionEmprendimiento[nombreCampo]) {
+                const resultado = reglasValidacionEmprendimiento[nombreCampo](campo);
+                if (resultado === true) {
+                    mostrarMensajeErrorEmprendimiento(campo, null);
+                }
+            }
+        });
+    }
+});
+
+// Validación en tiempo real para formulario de productos
+Object.values(camposFormularioProducto).forEach(campo => {
+    if (campo) {
+        campo.addEventListener('input', function() {
+            const nombreCampo = Object.keys(camposFormularioProducto).find(key => camposFormularioProducto[key] === campo);
+            if (nombreCampo && reglasValidacionProducto[nombreCampo]) {
+                const resultado = reglasValidacionProducto[nombreCampo](campo);
+                if (resultado === true) {
+                    mostrarMensajeErrorProducto(campo, null);
+                }
+            }
+        });
+    }
+});
+
+// Validación en tiempo real para el select de emprendimiento
+document.addEventListener('DOMContentLoaded', function() {
+    const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
+    if (selectEmprendimiento) {
+        selectEmprendimiento.addEventListener('change', function() {
+            if (this.value) {
+                const contenedorError = this.parentElement.querySelector('.error-message');
+                if (contenedorError) {
+                    contenedorError.style.display = 'none';
+                }
+                this.style.borderColor = '';
+            }
+        });
+    }
+});
+
+// Funcionalidad para el botón "Eliminar" en la sección "Mis productos"
+document.addEventListener('DOMContentLoaded', function() {
+    const btnEliminar = document.querySelector('.btn_secundario');
+    const textareaMisProductos = document.querySelector('.contenedor_formulario:last-child textarea[readonly]');
+    
+    if (btnEliminar && textareaMisProductos) {
+        btnEliminar.addEventListener('click', function() {
+            // Usar SweetAlert2 para confirmar la eliminación
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción eliminará la información del producto mostrado",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Limpiar el textarea
+                        textareaMisProductos.value = '';
+                        
+                        // Mostrar mensaje de éxito
+                        Swal.fire({
+                            title: '¡Eliminado!',
+                            text: 'La información del producto ha sido eliminada.',
+                            icon: 'success',
+                            confirmButtonColor: '#28a745'
+                        });
+                    }
+                });
+            } else {
+                // Fallback si no hay SweetAlert2
+                if (confirm('¿Estás seguro de que quieres eliminar la información del producto?')) {
+                    textareaMisProductos.value = '';
+                    alert('La información del producto ha sido eliminada.');
+                }
+            }
+        });
+    }
+});
