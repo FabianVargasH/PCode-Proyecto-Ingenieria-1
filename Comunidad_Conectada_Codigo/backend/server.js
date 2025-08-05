@@ -28,3 +28,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 app.listen(port, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${port}`);
 });
+
+//Conectar ruta Eventos al servidor
+const eventosRoutes = requiere ('./routes/eventos');
+app.use('/api/eventos', eventosRoutes);
