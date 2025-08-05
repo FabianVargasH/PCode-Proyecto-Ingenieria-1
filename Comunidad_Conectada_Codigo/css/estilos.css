@@ -791,9 +791,22 @@ body {
     flex-direction: column;
     gap: 10px;
 }
-.txt_campo {
+.txt_campo_jc {
     background: #F3F4F6;
-    border: 2px solid #E5E7EB;
+    border: 0px solid #E5E7EB;
+    padding-bottom: 200px;
+    padding-left: 50px;
+    padding-right: 625px;
+    padding-top: 10px;
+}
+
+.txt_campo_jc_2 {
+    background: #F3F4F6;
+    border: 0px solid #E5E7EB;
+    padding-bottom: 100px;
+    padding-left: 25px;
+    padding-right: 325px;
+    padding-top: 8px;
 }
 /* ESTILOS ESPECÍFICOS - ANUNCIOS COMUNITARIOS */
 .anuncio_item {
