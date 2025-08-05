@@ -1,84 +1,192 @@
-// Se agrega un event listener al formulario con id "formModificarOferta" para ejecutar lógica cuando se intente enviar
-document.getElementById("formModificarOferta").addEventListener("submit", function (e) {
-    e.preventDefault(); // Previene el envío normal del formulario para hacer validaciones antes
+// Referencias a elementos del formulario
+const formulario = document.getElementById("formModificarOferta");
+const camposFormulario = {
+    emprendimiento: document.getElementById("selectEmprendimiento"),
+    producto: document.getElementById("selectProducto"),
+    nuevoDescuento: document.getElementById("txtNuevoDescuento"),
+    descripcion: document.getElementById("txtDescripcion"),
+    condiciones: document.getElementById("txtCondiciones"),
+    duracion: document.getElementById("txtDuracion")
+};
 
-    // Se obtienen referencias a los campos del formulario que se van a validar
-    const campos = {
-        emprendimiento: document.getElementById("selectEmprendimiento"),
-        producto: document.getElementById("selectProducto"),
-        nuevoDescuento: document.getElementById("txtNuevoDescuento"),
-        descripcion: document.getElementById("txtDescripcion"),
-        condiciones: document.getElementById("txtCondiciones"),
-        duracion: document.getElementById("txtDuracion"),
-    };
+// Reglas de validación estructuradas
+const reglasValidacion = {
+    emprendimiento: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        if (!valorIngresado) {
+            return "Debe seleccionar un emprendimiento";
+        }
+        return true;
+    },
 
-    const errores = []; // Aquí se guardarán todos los errores encontrados
+    producto: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        if (!valorIngresado) {
+            return "Debe seleccionar un producto";
+        }
+        return true;
+    },
 
-    // Validación: El usuario debe seleccionar un emprendimiento
-    if (!campos.emprendimiento.value) {
-        errores.push({ campo: campos.emprendimiento, mensaje: "Debe seleccionar un emprendimiento" });
+    nuevoDescuento: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        if (!valorIngresado) {
+            return "El nuevo descuento es obligatorio";
+        }
+        if (valorIngresado.length < 2) {
+            return "El descuento debe tener al menos 2 caracteres";
+        }
+        if (valorIngresado.length > 30) {
+            return "El descuento debe tener máximo 30 caracteres";
+        }
+        return true;
+    },
+
+    descripcion: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        if (!valorIngresado) {
+            return "La descripción es obligatoria";
+        }
+        if (valorIngresado.length < 10) {
+            return "La descripción debe tener al menos 10 caracteres";
+        }
+        if (valorIngresado.length > 150) {
+            return "La descripción debe tener máximo 150 caracteres";
+        }
+        return true;
+    },
+
+    condiciones: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        if (!valorIngresado) {
+            return "Las condiciones son obligatorias";
+        }
+        if (valorIngresado.length < 5) {
+            return "Las condiciones deben tener al menos 5 caracteres";
+        }
+        if (valorIngresado.length > 120) {
+            return "Las condiciones deben tener máximo 120 caracteres";
+        }
+        return true;
+    },
+
+    duracion: (campoInput) => {
+        const valorIngresado = campoInput.value.trim();
+        if (!valorIngresado) {
+            return "La duración es obligatoria";
+        }
+
+        // Extraer número del texto (por ejemplo: "5 días")
+        const numeroEncontrado = valorIngresado.match(/\d+/);
+        if (!numeroEncontrado) {
+            return "La duración debe contener al menos un número";
+        }
+
+        const duracionNum = parseInt(numeroEncontrado[0]);
+        if (isNaN(duracionNum)) {
+            return "La duración debe incluir un número válido";
+        }
+        if (duracionNum < 1) {
+            return "La duración debe ser mayor a 0";
+        }
+        if (duracionNum > 365) {
+            return "La duración no puede ser mayor a 365 días";
+        }
+
+        return true;
     }
+};
 
-    // Validación: Debe seleccionarse un producto
-    if (!campos.producto.value) {
-        errores.push({ campo: campos.producto, mensaje: "Debe seleccionar un producto" });
-    }
-
-    // Validación: El nuevo descuento no puede tener más de 20 caracteres
-    if (campos.nuevoDescuento.value.trim().length > 20) {
-        errores.push({ campo: campos.nuevoDescuento, mensaje: "El descuento debe tener máximo 20 caracteres" });
-    }
-
-    // Validación: La descripción no puede exceder 100 caracteres
-    if (campos.descripcion.value.trim().length > 100) {
-        errores.push({ campo: campos.descripcion, mensaje: "La descripción debe tener máximo 100 caracteres" });
-    }
-
-    // Validación: Las condiciones no pueden exceder 100 caracteres
-    if (campos.condiciones.value.trim().length > 100) {
-        errores.push({ campo: campos.condiciones, mensaje: "Las condiciones deben tener máximo 100 caracteres" });
-    }
-
-    // Validación: La duración debe ser un número y no mayor a 365 días
-    const duracionValor = campos.duracion.value.trim();
-    if (!/^\d+$/.test(duracionValor) || parseInt(duracionValor) > 365) {
-        errores.push({ campo: campos.duracion, mensaje: "La duración debe ser un número no mayor a 365" });
-    }
-
-    // Elimina todos los mensajes de error anteriores antes de mostrar nuevos
-    document.querySelectorAll(".error-message").forEach(msg => msg.remove());
-
-    // Si hay errores encontrados, se muestran junto a los campos correspondientes
-    if (errores.length > 0) {
-        errores.forEach(({ campo, mensaje }) => {
-            // Se crea un nuevo span para mostrar el mensaje de error
-            const span = document.createElement("span");
-            span.className = "error-message";
-            span.style.color = "red";
-            span.style.fontSize = "12px";
-            span.textContent = mensaje;
-            campo.parentElement.appendChild(span); // Se inserta el mensaje debajo del campo
-            campo.style.borderColor = "red"; // Se aplica borde rojo para indicar error
-        });
-
-        // Se lanza un cuadro de alerta usando SweetAlert2 para indicar que hay errores
-        Swal.fire({
-            title: "Formulario inválido",
-            text: "Por favor, revisa los campos marcados en rojo.",
-            icon: "error"
-        });
-
+// Función para marcar campo con error (sin mostrar texto)
+const marcarCampoConError = (elementoInput, tieneError) => {
+    if (tieneError) {
+        elementoInput.classList.add("error");
+        elementoInput.style.borderColor = 'red';
     } else {
-        // Si no hay errores, se muestra mensaje de éxito con SweetAlert2
-        Swal.fire({
-            title: "¡Modificación exitosa!",
-            text: "Los datos han sido actualizados correctamente.",
-            icon: "success"
-        }).then(() => {
-            // Se limpia el formulario y se restablecen los bordes
-            document.getElementById("formModificarOferta").reset();
-            document.querySelectorAll(".txt_campo").forEach(campo => campo.style.borderColor = "");
-        });
+        elementoInput.classList.remove('error');
+        elementoInput.style.borderColor = '';
+    }
+};
+
+// Función principal de validación
+const ejecutarValidacionCompleta = () => {
+    let primerErrorEncontrado = null;
+    let formularioEsValido = true;
+
+    for (const nombreCampo in reglasValidacion) {
+        const elementoCampo = camposFormulario[nombreCampo];
+
+        if (elementoCampo) {
+            const resultadoValidacion = reglasValidacion[nombreCampo](elementoCampo);
+
+            if (resultadoValidacion !== true) {
+                marcarCampoConError(elementoCampo, true);
+                formularioEsValido = false;
+                if (!primerErrorEncontrado) {
+                    primerErrorEncontrado = { referenciaHTML: elementoCampo, mensaje: resultadoValidacion };
+                }
+            } else {
+                marcarCampoConError(elementoCampo, false);
+            }
+        }
+    }
+
+    return formularioEsValido ? null : primerErrorEncontrado;
+};
+
+// Función para limpiar el formulario
+const limpiarCampos = () => {
+    Object.values(camposFormulario).forEach(elementoCampo => {
+        if (elementoCampo) {
+            elementoCampo.value = '';
+            marcarCampoConError(elementoCampo, false);
+        }
+    });
+
+    formulario.reset();
+    document.querySelectorAll(".error-message").forEach(msg => msg.remove());
+    document.querySelectorAll(".txt_campo").forEach(campo => campo.style.borderColor = "");
+};
+
+// Desactivar validaciones HTML5 nativas
+formulario.setAttribute('novalidate', 'true');
+
+// Event listener principal del formulario
+formulario.addEventListener("submit", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const errorEncontrado = ejecutarValidacionCompleta();
+
+    if (errorEncontrado) {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: "Error en el formulario",
+                text: errorEncontrado.mensaje,
+                icon: "error",
+                confirmButtonColor: '#dc3545'
+            });
+        } else {
+            alert("Error: " + errorEncontrado.mensaje);
+        }
+
+        if (errorEncontrado.referenciaHTML) {
+            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorEncontrado.referenciaHTML.focus();
+        }
+    } else {
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: "¡Modificación exitosa!",
+                text: "Los datos han sido actualizados correctamente.",
+                icon: "success",
+                confirmButtonColor: '#28a745',
+                confirmButtonText: 'Continuar'
+            }).then(() => {
+                limpiarCampos();
+            });
+        } else {
+            alert("¡Éxito! Los datos han sido actualizados correctamente.");
+            limpiarCampos();
+        }
     }
 });
-
