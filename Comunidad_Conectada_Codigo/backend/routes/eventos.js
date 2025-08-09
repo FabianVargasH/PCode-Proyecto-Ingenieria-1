@@ -45,3 +45,15 @@ router.post('/', async (req, res) => {
 });
 
 module.exports = router;
+
+//GET para obtener todos los enventos
+
+router.get('/', async (req, res) => {
+  try{
+    const eventos = await Evento.find();
+    res.status(200).json(eventos);
+  }
+  catch (error){
+    console.error({mensaje: 'Error al obtener eventos:', error})
+  }
+});
