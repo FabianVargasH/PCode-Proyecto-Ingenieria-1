@@ -3,6 +3,11 @@ require('dotenv').config();
 
 // Importaciones
 const express = require('express');
+// Cargar variables de entorno
+require('dotenv').config();
+
+// Importaciones
+const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
