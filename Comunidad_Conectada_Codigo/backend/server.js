@@ -6,25 +6,33 @@ const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
+// Middlewares
+app.use(express.json()); // para interpretar JSON 
+
+// Importación de rutas
+const eventosRoutes = require('./routes/eventos');
+const anunciosRoutes = require('./routes/anuncios');
+const registroRoutes = require('./routes/registro_routes');
+const loginRoutes = require('./routes/login_routes');
+
+// Uso de las rutas 
+app.use('/api/anuncios', anunciosRoutes);
+app.use('/api/eventos', eventosRoutes);  
+app.use('/api/registro', registroRoutes);
+app.use('/api/login', loginRoutes);
+
 // Puerto
 const port = process.env.PORT || 3000;
 
-// Middlewares
-app.use(express.json()); // para interpretar JSON
-
-// Rutas (ejemplo)
-const anunciosRoutes = require('./routes/anuncios'); // si hubiese una ruta ya 
-app.use('/api/anuncios', anunciosRoutes);
-
 // Conexión a MongoDB Atlas
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('Conectado a MongoDB Atlas'))
-.catch((err) => console.error(' Error al conectar a MongoDB:', err));
+mongoose.connect(process.env.MONGODB_URI)
+  .then(() => console.log('Conectado a MongoDB Atlas'))
+  .catch((err) => console.error('Error al conectar con MongoDB:', err));
 
 // Iniciar servidor
 app.listen(port, () => {
-  console.log(`🚀 Servidor corriendo en http://localhost:${port}`);
+  console.log(`Servidor corriendo en http://localhost:${port}`); 
 });
+
+
+
