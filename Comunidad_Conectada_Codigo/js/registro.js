@@ -95,6 +95,10 @@ const reglasValidacion = {
         return true;
     }
 };
+const obtenerTipoUsuario = () => {
+    const tipoSeleccionado = document.querySelector('input[name="tipo_usuario_seleccionado"]:checked');
+    return tipoSeleccionado ? tipoSeleccionado.value : null;
+};
 
 btnRegistrarse.addEventListener("click", (eventoClick) => {
     eventoClick.preventDefault();
@@ -117,29 +121,24 @@ btnRegistrarse.addEventListener("click", (eventoClick) => {
             errorEncontrado.referenciaHTML.focus();
         }
     } else {
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "¡Registro exitoso!",
-                text: "Su cuenta ha sido creada exitosamente.",
-                icon: "success",
-                confirmButtonColor: '#28a745',
-                confirmButtonText: 'Continuar' 
-            }).then(() => {
-                limpiarCampos();
-                //Dirigir al usuario al dashboard despues del registro
-                window.location.href = '../dashboard/dashboard.html'; 
-            });
-        }else {
-            alert("¡Registro exitoso! Su información ha sido registrada correctamente.");
-            limpiarCampos();
-            window.location.href = '../dashboard/dashboard.html';
-        }
-    }
-});
+        // Obtener datos del formulario
+        const tipoUsuario = obtenerTipoUsuario();
+        const nombreCompleto = camposFormulario.nombre.value.trim();
+        const telefono = camposFormulario.telefono.value.trim();
+        const fechaNacimiento = camposFormulario.fechaNacimiento.value;
+        const correoElectronico = camposFormulario.email.value.trim();
+        const contrasenna = camposFormulario.password.value;
 
-btnLimpiar.addEventListener("click", (eventoClick) => {
-    eventoClick.preventDefault();
-    limpiarCampos();
+        // Llamar función para registrar usuario
+        registrar_usuario(
+            tipoUsuario,
+            nombreCompleto,
+            telefono,
+            fechaNacimiento,
+            correoElectronico,
+            contrasenna
+        );
+    }
 });
 
 //Funcion para mostrar o esconder errores
