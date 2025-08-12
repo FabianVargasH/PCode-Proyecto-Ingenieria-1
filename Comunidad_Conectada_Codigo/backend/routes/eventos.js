@@ -18,12 +18,10 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   console.log('Body recibido:', req.body);
 
-  // Validación: asegurarse que req.body exista
   if (!req.body || Object.keys(req.body).length === 0) {
     return res.status(400).json({ mensaje: 'No se recibió un cuerpo válido en la solicitud' });
   }
 
-  // Desestructurar datos, sirve para sacar todos los datos del evento de una sola vez, lo hice asi porque no me servia el post al server sacando uno por uno
   const { titulo, fecha, hora, ubicacion, descripcion } = req.body;
 
   try {
@@ -33,7 +31,7 @@ router.post('/', async (req, res) => {
       hora,
       ubicacion,
       descripcion,
-      estado: 'pendiente' // valor por defecto
+      estado: 'pendiente'
     });
 
     await nuevoEvento.save();
@@ -44,4 +42,49 @@ router.post('/', async (req, res) => {
   }
 });
 
+// DELETE para eliminar un evento por ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const eventoEliminado = await Evento.findByIdAndDelete(req.params.id);
+    if (!eventoEliminado) {
+      return res.status(404).json({ mensaje: 'Evento no encontrado' });
+    }
+    res.json({ mensaje: 'Evento eliminado correctamente' });
+  } catch (error) {
+    res.status(500).json({ mensaje: 'Error al eliminar evento' });
+  }
+});
+
+// PUT para actualizar un evento por ID
+router.put('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const camposPermitidos = ['titulo', 'fecha', 'hora', 'ubicacion', 'descripcion', 'estado'];
+    const data = {};
+    for (const key of camposPermitidos) {
+      if (key in req.body) data[key] = req.body[key];
+    }
+
+    if (Object.keys(data).length === 0) {
+      return res.status(400).json({ mensaje: "No hay campos válidos para actualizar" });
+    }
+
+    const eventoActualizado = await Evento.findByIdAndUpdate(id, data, {
+      new: true,
+      runValidators: true
+    });
+
+    if (!eventoActualizado) {
+      return res.status(404).json({ mensaje: "Evento no encontrado" });
+    }
+
+    res.json(eventoActualizado);
+  } catch (error) {
+    console.error('Error al actualizar evento:', error);
+    res.status(500).json({ mensaje: "Error al actualizar el evento" });
+  }
+});
+
 module.exports = router;
+
