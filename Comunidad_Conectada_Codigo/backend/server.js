@@ -4,9 +4,11 @@ require('dotenv').config();
 // Importaciones
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const app = express();
 
 // Middlewares
+app.use(cors());
 app.use(express.json()); // para interpretar JSON 
 
 // Importación de rutas
@@ -33,6 +35,3 @@ mongoose.connect(process.env.MONGODB_URI)
 app.listen(port, () => {
   console.log(`Servidor corriendo en http://localhost:${port}`); 
 });
-
-
-
