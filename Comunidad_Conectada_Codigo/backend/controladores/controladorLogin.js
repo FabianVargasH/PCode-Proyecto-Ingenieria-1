@@ -90,30 +90,6 @@ const iniciar_sesion = async (correoElectronico, contrasenna) => {
         }
     }
 };
-//ACTIVAR ESTA FUNCION CUANDO ESTE HECHO EL DASHBOARD
-// Función para verificar si hay una sesión activa al cargar la página
-/* const verificarSesionActiva = () => {
-    const datosUsuarioGuardado = localStorage.getItem('usuarioActivo')
-    if (datosUsuarioGuardado) {
-        try {
-            const informacionUsuario = JSON.parse(datosUsuarioGuardado)
-            const fechaInicioSesion = new Date(informacionUsuario.fechaLogin)
-            const fechaActual = new Date()
-            
-            // Verificar si la sesión no ha expirado 
-            const tiempoLimiteExpiracion = 24 * 60 * 60 * 1000; // 24 horas en millisegundos
-            if (fechaActual - fechaInicioSesion < tiempoLimiteExpiracion) {
-                // Sesión activa válida, redirigir al dashboard
-                window.location.href = "../dashboard/dashboard.html"
-            } else {
-                // Sesión expirada, limpiar localStorage
-                localStorage.removeItem('usuarioActivo');
-            }
-        } catch (errorParseo) {
-            // Error al parsear los datos, limpiar localStorage
-            localStorage.removeItem('usuarioActivo')
-        }
-    }
-}; */
+
 // Verificar sesión activa al cargar la página de login
 document.addEventListener('DOMContentLoaded', verificarSesionActiva)
