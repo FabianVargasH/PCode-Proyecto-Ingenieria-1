@@ -1,95 +1,109 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard | Comunidad Conectada</title>
   <link rel="stylesheet" href="../../css/estilos.css">
 </head>
-
 <body>
+    <div class="contenedor_pagina">
+        <div class="contenido_pagina">
+            <header class="encabezado">
+                <h1>Comunidad-Conectada</h1>
+                <div class="contenedor_enlace_inicio">
+                    <div class="">
+                      <button onclick="cerrarSesion()" class="enlace_inicio">Cerrar sesión</button>
+                    </div>
+                </div>
+            </header>
+            <div class="contenedor_principal">
+                <div class="contenido_principal">
+                    <h1 class="titulo_principal">Explora cada uno de nuestros apartados y aporta a tú comunidad</h1>
+                    <div class="selector_comunidad">
+                        <label for="comunidad">Elige tú comunidad</label>
+                        <select id="comunidad">
+                            <option>Lista de opciones</option>
+                            <option>Belén</option>
+                            <option>Escazú</option>
+                            <option>Otro ejemplo</option>
+                        </select>
+                    </div>
+                    <div class="dashboard_grid">
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Emprendimientos</h3>
+                                <p>Descubre proyectos emprendedores de la comunidad. Los emprendedores pueden registrar y actualizar sus emprendimientos fácilmente.</p>
+                            </div>
+                            <a href="./emprendimientos/lista_publica.html" class="enlace_inicio">Explorar emprendimientos</a>
+                        </div>
 
-  <!-- Encabezado -->
-  <header>
-    <h1>Comunidad-Conectada</h1>
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Reportes y sugerencias</h3>
+                                <p>Envía reportes de problemas o comparte ideas para mejorar tu comunidad.</p>
+                            </div>
+                            <a href="./reportes_sugerencias/reportes_sugerencias.html" class="enlace_inicio">Explorar reportes y sugerencias</a>
+                        </div>
 
-    <div class="user-info">
-      <span class="user-icon">👤</span>
-      <span class="user-name">Nombre usuario</span>
-      <span class="user-role">Rol</span>
-      <button>Cerrar sesión</button>
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Transporte Público</h3>
+                                <p>Accede a información sobre rutas, horarios y tarifas del transporte local</p>
+                            </div>
+                            <a href="../dashboard/transporte_publico/transporteinfo.html" class="enlace_inicio">Explorar transporte público</a>
+                        </div>
+
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Calendario Comunitario</h3>
+                                <p>Revisa eventos, reuniones y actividades programadas en tu comunidad.</p>
+                            </div>
+                            <a href="../dashboard/calendario_comunitario/calendario_comunitario.html" class="enlace_inicio">Explorar calendario comunitario</a>
+                        </div>
+
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Ofertas y descuentos</h3>
+                                <p>Descubre promociones y beneficios ofrecidos por negocios locales.</p>
+                            </div>
+                            <a href="./ofertas_descuentos/ofertas_descuentos.html" class="enlace_inicio">Explorar ofertas y descuentos</a>
+                        </div>
+
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Mapa Interactivo</h3>
+                                <p>Visualiza ubicaciones clave, servicios y puntos de interés de tu comunidad.</p>
+                            </div>
+                            <a href="./mapa_interactivo/mapa.html" class="enlace_inicio">Explorar mapa interactivo</a>
+                        </div>
+
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Panel Administrativo</h3>
+                                <p>Gestión centralizada para moderadores y administradores de la plataforma.</p>
+                            </div>
+                            <a href="./panel_administrador/moderacion.html" class="enlace_inicio">Explorar panel administrativo</a>
+                        </div>
+
+                        <div class="tarjeta_dashboard">
+                            <div>
+                                <h3>Anuncios Comunitarios</h3>
+                                <p>Consulta avisos importantes de la comunidad y mantente al tanto de las novedades.</p>
+                            </div>
+                            <a href="./anuncios_comunales/anuncios.html" class="enlace_inicio">Explorar anuncios comunitarios</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="pie_pagina">
+            ©PCode
+        </footer>
     </div>
-  </header>
-
-  <!-- Introducción -->
-  <section class="intro">
-    <p>Explora cada uno de nuestros apartados y aporta a tu comunidad</p>
-
-    <!-- Lista de comunidades -->
-    <label for="comunidad">Elige tu comunidad</label>
-    <select id="comunidad">
-      <option>San José</option>
-      <option>Alajuela</option>
-      <option>Cartago</option>
-    </select>
-  </section>
-
-  <!-- Tarjetas de secciones -->
-  <main class="tarjetas">
-    <section class="card">
-      <h2>Emprendimientos</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar Emprendimientos</button>
-    </section>
-
-    <section class="card">
-      <h2>Reportes y sugerencias</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar reportes y sugerencias</button>
-    </section>
-
-    <section class="card">
-      <h2>Transporte Público</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar información</button>
-    </section>
-
-    <section class="card">
-      <h2>Calendario Comunitario</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar Calendario Comunitario</button>
-    </section>
-
-    <section class="card">
-      <h2>Ofertas y descuentos</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar ofertas y descuentos</button>
-    </section>
-
-    <section class="card">
-      <h2>Mapa Interactivo</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar mapa</button>
-    </section>
-
-    <section class="card">
-      <h2>Panel Administrativo</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar Panel Administrativo</button>
-    </section>
-
-    <section class="card">
-      <h2>Anuncios Comunitarios</h2>
-      <p>Descripción del apartado</p>
-      <button>Explorar anuncios</button>
-    </section>
-  </main>
-
-  <!-- Footer -->
-  <footer>
-    <p>@PCode derechos reservados 2025</p>
-  </footer>
-
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Controlador de Cerrar Sesión -->
+    <script src="../../backend/controladores/controladorCerrarSesion.js"></script>
 </body>
 </html>
