@@ -37,7 +37,6 @@
                             <strong>ID:</strong> 01<br>
                             <strong>Descripción:</strong> Falta iluminación en la plaza<br>
                             <strong>Prioridad:</strong> Nivel 2<br>
-                            <strong>Visible:</strong> Público
                         </p>
                     </div>
                     <div class="tarjeta">
@@ -45,7 +44,6 @@
                             <strong>ID:</strong> 02<br>
                             <strong>Descripción:</strong> Crear una zona Wi-Fi libre<br>
                             <strong>Prioridad:</strong> Nivel 1<br>
-                            <strong>Visible:</strong> Privado
                         </p>
                     </div>
                 </div>
@@ -56,10 +54,7 @@
 
                     <form class="formulario_principal" id="formReporte">
                         
-                        <!-- Campo de ID del reporte, solo lectura -->
-                        <label class="etiqueta_formulario" for="idReporte">ID del reporte</label>
-                        <input type="text" id="idReporte" class="txt_campo" value="02" readonly>
-
+ 
                         <!-- Campo para seleccionar la fecha desde un calendario -->
                         <label class="etiqueta_formulario" for="fechaReporte">Fecha del reporte</label>
                         <input type="date" id="fechaReporte" class="txt_campo" required>
@@ -76,13 +71,6 @@
                             <option value="nivel2">Nivel 2</option>
                             <option value="nivel3">Nivel 3</option>
                         </select>
-
-                        <!-- Opciones de visibilidad mediante botones de radio -->
-                        <label class="etiqueta_formulario">Visibilidad</label>
-                        <div style="margin-bottom: 15px;">
-                            <label><input type="radio" name="visibilidad" value="publico"> Público</label>
-                            <label style="margin-left: 20px;"><input type="radio" name="visibilidad" value="privado"> Privado</label>
-                        </div>
 
                         <!-- Botón para enviar el formulario -->
                         <button type="submit" class="btn_primario">Enviar</button>
