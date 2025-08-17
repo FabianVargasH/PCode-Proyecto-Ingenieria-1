@@ -16,12 +16,15 @@ const eventosRoutes = require('./routes/eventos');
 const anunciosRoutes = require('./routes/anuncios');
 const registroRoutes = require('./routes/registro_routes');
 const loginRoutes = require('./routes/login_routes');
+const administracionRoutes = require('./routes/administracion_routes');
 
 // Uso de las rutas 
 app.use('/api/anuncios', anunciosRoutes);
 app.use('/api/eventos', eventosRoutes);  
 app.use('/api/registro', registroRoutes);
 app.use('/api/login', loginRoutes);
+app.use('/api/administracion', administracionRoutes);
+
 
 // Puerto
 const port = process.env.PORT || 3000;
