@@ -7,13 +7,13 @@ const formularioProducto = document.getElementById("formulario_principal1");
 const btnAgregarProducto = document.getElementById("btnRegistrarse1");
 
 const camposFormularioEmprendimiento = {
-    nombreNegocio: document.getElementById("txtNombreCompleto"),
-    descripcionNegocio: document.getElementById("descripcion_negocio")
+    nombreNegocio: document.getElementById("nombreEmprendimiento"),
+    descripcionNegocio: document.getElementById("descripcionEmprendimiento")
 };
 
-const camposFormularioProducto = {
-    nombreProducto: document.getElementById("txtNombreCompleto1"),
-    descripcionProducto: document.getElementById("descripcion_producto"),
+const camposFormularioProducto = {  
+    nombreProducto: document.getElementById("nombreProducto"),
+    descripcionProducto: document.getElementById("descripcionProducto"),
     precio: document.getElementById("precio")
 };
 
@@ -134,6 +134,19 @@ btnCrearEmprendimiento.addEventListener("click", (eventoClick) => {
             errorEncontrado.referenciaHTML.focus();
         }
     } else {
+        
+        /// obtener datos del formulario
+
+        const nombreNegocio = camposFormularioEmprendimiento.nombreNegocio.value.trim()
+        const descripcionNegocio = camposFormularioEmprendimiento.descripcionNegocio.value.trim()
+
+        registrar_emprendimiento(
+            nombreNegocio, descripcionNegocio
+        )
+
+
+
+
         // Emprendimiento creado exitosamente
         if (typeof Swal !== 'undefined') {
             Swal.fire({
@@ -176,6 +189,20 @@ btnAgregarProducto.addEventListener("click", (eventoClick) => {
             errorEncontrado.referenciaHTML.focus();
         }
     } else {
+
+        /// obtener datos del formulario
+
+        const nombreProducto = camposFormularioProducto.nombreProducto.value.trim()
+        const descripcionProducto = camposFormularioProducto.descripcionProducto.value.trim()
+        const precio = camposFormularioProducto.precio.value.trim()
+
+        registrar_producto(
+            nombreProducto, descripcionProducto, precio
+        )
+
+
+
+
         // Producto agregado exitosamente
         if (typeof Swal !== 'undefined') {
             Swal.fire({
