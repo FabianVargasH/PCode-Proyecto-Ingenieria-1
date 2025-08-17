@@ -14,7 +14,6 @@ const camposFormulario = {
     correo: document.getElementById("txtCorreo")
 };
 
-// Reglas de validación
 const reglasValidacion = {
     ruta: (campoInput) => {
         const valorIngresado = campoInput.value.trim();
@@ -109,47 +108,6 @@ const reglasValidacion = {
     }
 };
 
-// Event listener para el botón de actualizar
-btnActualizar.addEventListener("click", (eventoClick) => {
-    eventoClick.preventDefault();
-    const errorEncontrado = ejecutarValidacionCompleta();
-    
-    if (errorEncontrado) {
-        // Mostrar error con SweetAlert2
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "Error en el formulario",
-                text: errorEncontrado.mensaje,
-                icon: "error",
-                confirmButtonColor: '#dc3545'
-            });
-        } else {
-            alert("Error: " + errorEncontrado.mensaje);
-        }
-        
-        // Hacer scroll al campo con error
-        if (errorEncontrado.referenciaHTML) {
-            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            errorEncontrado.referenciaHTML.focus();
-        }
-    } else {
-        // Formulario válido
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "¡Actualización exitosa!",
-                text: "La información del transporte público ha sido actualizada.",
-                icon: "success",
-                confirmButtonColor: '#28a745',
-                confirmButtonText: 'Continuar'
-            }).then(() => {
-                limpiarCampos();
-            });
-        } else {
-            alert("¡Actualización exitosa! La información ha sido guardada.");
-            limpiarCampos();
-        }
-    }
-});
 
 // Función para mostrar errores en los campos
 const mostrarMensajeError = (elementoInput, mensajeError) => {
@@ -214,7 +172,50 @@ const limpiarCampos = () => {
     });
 };
 
-// Event listeners para los botones de Aprobar y Rechazar
+// Event listener para el botón de actualizar
+btnActualizar.addEventListener("click", async (eventoClick) => {
+    eventoClick.preventDefault();
+    
+    // Ejecutar validaciones
+    const errorEncontrado = ejecutarValidacionCompleta();
+    
+    if (errorEncontrado) {
+        // Mostrar error con SweetAlert2
+        if (typeof Swal !== 'undefined') {
+            Swal.fire({
+                title: "Error en el formulario",
+                text: errorEncontrado.mensaje,
+                icon: "error",
+                confirmButtonColor: '#dc3545'
+            });
+        } else {
+            alert("Error: " + errorEncontrado.mensaje);
+        }
+        
+        // Hacer scroll al campo con error
+        if (errorEncontrado.referenciaHTML) {
+            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            errorEncontrado.referenciaHTML.focus();
+        }
+    } else {
+        // Formulario válido - enviar al backend usando el controlador
+        if (typeof FormularioTransporte !== 'undefined') {
+            const datosFormulario = FormularioTransporte.crearObjetoDatos(camposFormulario);
+            console.log('Datos del formulario validados:', datosFormulario);
+            
+            const resultado = await FormularioTransporte.procesarEnvio(datosFormulario, btnActualizar);
+            
+            if (resultado.exito) {
+                // Limpiar formulario después del éxito
+                limpiarCampos();
+            }
+        } else {
+            console.error('FormularioTransporte no está disponible. Asegúrese de cargar controladores.js');
+            alert('Error: Controladores no disponibles. Verifique que los archivos estén cargados correctamente.');
+        }
+    }
+});
+//Botones de aprobar | rechazar
 document.addEventListener('DOMContentLoaded', function() {
     // Seleccionar todos los botones por clase
     const botonesAprobar = document.querySelectorAll('.btn-aprobar');
@@ -226,30 +227,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const elementoPadre = this.closest('.admin-element');
             const textoElemento = elementoPadre.querySelector('span').textContent;
             
-            if (typeof Swal !== 'undefined') {
-                Swal.fire({
-                    title: '¿Aprobar elemento?',
-                    text: `¿Está seguro que desea aprobar: ${textoElemento}?`,
-                    icon: 'question',
-                    showCancelButton: true,
-                    confirmButtonColor: '#28a745',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Sí, aprobar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
+            if (typeof UIHelpers !== 'undefined') {
+                UIHelpers.mostrarConfirmacion(
+                    '¿Aprobar elemento?',
+                    `¿Está seguro que desea aprobar: ${textoElemento}?`,
+                    'Sí, aprobar'
+                ).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire({
-                            title: '¡Aprobado!',
-                            text: 'El elemento ha sido aprobado exitosamente.',
-                            icon: 'success',
-                            confirmButtonColor: '#28a745'
-                        }).then(() => {
-                            // Remover el elemento de la lista
+                        UIHelpers.mostrarExito('¡Aprobado!', 'El elemento ha sido aprobado exitosamente.')
+                        .then(() => {
                             elementoPadre.remove();
                         });
                     }
                 });
             } else {
+                // Fallback sin controladores
                 if (confirm(`¿Está seguro que desea aprobar: ${textoElemento}?`)) {
                     alert('Elemento aprobado exitosamente.');
                     elementoPadre.remove();
@@ -264,30 +256,21 @@ document.addEventListener('DOMContentLoaded', function() {
             const elementoPadre = this.closest('.admin-element');
             const textoElemento = elementoPadre.querySelector('span').textContent;
             
-            if (typeof Swal !== 'undefined') {
-                Swal.fire({
-                    title: '¿Rechazar elemento?',
-                    text: `¿Está seguro que desea rechazar: ${textoElemento}?`,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Sí, rechazar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
+            if (typeof UIHelpers !== 'undefined') {
+                UIHelpers.mostrarConfirmacion(
+                    '¿Rechazar elemento?',
+                    `¿Está seguro que desea rechazar: ${textoElemento}?`,
+                    'Sí, rechazar'
+                ).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire({
-                            title: '¡Rechazado!',
-                            text: 'El elemento ha sido rechazado.',
-                            icon: 'success',
-                            confirmButtonColor: '#dc3545'
-                        }).then(() => {
-                            // Remover el elemento de la lista
+                        UIHelpers.mostrarExito('¡Rechazado!', 'El elemento ha sido rechazado.')
+                        .then(() => {
                             elementoPadre.remove();
                         });
                     }
                 });
             } else {
+                // Fallback sin controladores
                 if (confirm(`¿Está seguro que desea rechazar: ${textoElemento}?`)) {
                     alert('Elemento rechazado.');
                     elementoPadre.remove();
