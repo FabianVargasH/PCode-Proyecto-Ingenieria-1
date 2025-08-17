@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="./../../../css/estilos.css">
 </head>
 <body>
+    
     <div class="contenedor_pagina">
         <div class="contenido_pagina">
             <header class="encabezado">
@@ -21,29 +22,34 @@
                     <div class="titulo_principal">
                         <h2>Transporte Público Comunitario</h2>
                         <p class="subtitulo">Información actualizada de rutas y horarios</p>
+                        <div class="estado-actualizacion">
+        
+                        </div>
                     </div>
+                    
                     <!-- Contenedor principal de dos columnas -->
                     <div class="contenedor_transporte_horarios">
                         <!-- Columna izquierda - Información de ruta -->
                         <div class="seccion_formulario_transporte">
                             <div class="info-ruta">
-                                <h2 class="titulo_principal">Ruta</h2>
+                                <h2 class="titulo_ruta">Cargando ruta...</h2>
 
                                 <div class="detalle-ruta">
-                                    <p ><h2>Recorrido:</h2> Desde (punto A) Hasta [punto B]</p>
-                                </div>
-                                <div class="detalle-ruta">
-
-                                    <p class="tarifa"><strong><h2>Tarifa base:</h2></strong> $XXXX</p>
+                                    <div class="info-recorrido">
+                                        <h3>Recorrido:</h3>
+                                        <p class="recorrido-texto">Cargando información...</p>
+                                    </div>
+                                    <div class="info-tarifa">
+                                        <h3>Tarifa base:</h3>
+                                        <p class="tarifa-precio">Cargando...</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-
-                       
                         <!-- Columna derecha - Horarios -->
                         <div class="schedule">
-                            <h5 class="titulo_principal">Horarios de Operación</h5>
+                            <h3 class="titulo_horarios">Horarios de Operación</h3>
                             <div class="tabla-horarios">
                                 <table>
                                     <thead>
@@ -56,41 +62,28 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>Lunes a Viernes</td>
-                                            <td>00:00</td>
-                                            <td>00:00</td>
-                                            <td>00 min</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Sábados</td>
-                                            <td>00:00</td>
-                                            <td>00:00</td>
-                                            <td>00 min</td>
+                                            <td colspan="4" class="cargando">Cargando horarios...</td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                    <!-- Sección de contactos -->
+                    
+                    <!-- Sección de contacto -->
                     <div class="contenedor_contactos_oficiales">
                         <div class="contactos-contenido">
-                            <h4 class="titulo_principal">Contactos Oficiales</h4>
+                            <h3 class="titulo_contacto">Contacto Oficial</h3>
                             
-                            <div class="lista-contactos">
-                                <div class="contacto-item">
-                                    <h2>Ruta X</h2>
-                                    <div class="info-contacto">
-                                        <input type="text" class="txt_campo" value="Teléfono: 0000-0000" readonly>
-                                        <input type="text" class="txt_campo" value="Email: correo@domino.com" readonly>
+                            <div class="info-contacto-actual">
+                                <div class="contacto-datos">
+                                    <div class="dato-contacto">
+                                        <label>Teléfono:</label>
+                                        <span id="telefono-contacto">Cargando...</span>
                                     </div>
-                                </div>
-                                
-                                <div class="contacto-item">
-                                    <h2>Ruta Y</h2>
-                                    <div class="info-contacto">
-                                        <input type="text" class="txt_campo" value="Teléfono: 0000-0000" readonly>
-                                        <input type="text" class="txt_campo" value="Email: correo@domino.com" readonly>
+                                    <div class="dato-contacto">
+                                        <label>Email:</label>
+                                        <span id="email-contacto">Cargando...</span>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +96,10 @@
             <p>@PCode</p>
         </footer>
     </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/js/main.js"></script>
+    <script src="../../../js/transporte.js"></script>
+ 
 </body>
 </html>
