@@ -20,63 +20,22 @@
             <main class="contenido_principal">
                 <div class="contenedor_principal">
                     <h1 class="titulo_principal">Bienvenido, Administrador</h1>
+                    <!-- Nueva sección de Usuarios Registrados -->
+                    <div class="contenedor_formulario_grande">
+                        <div class="seccion_formulario">
+                            <h2 class="titulo_seccion">Usuarios registrados</h2>
+                            <div id="contenidoUsuarios">
+                                <p>fabian vargas | correo@gmail.com | Emprendedor</p>
+                                <p>Administrador | administrador@gmail.com | Administrador</p>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sección existente de transporte público -->
                     <div class="contenedor_formulario_grande">
                         <form class="formulario_principal" id="formularioAdmin">
-                            <!-- Sección 1: Anuncios pendientes de Aprobación -->
-                            <div class="seccion_formulario">
-                                <h2 class="titulo_seccion">Anuncios pendientes de Aprobación</h2>
-                                <div class="admin-grid">
-                                    <div class="admin-element">
-                                        <span>Ejemplo de anuncio</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de anuncio</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de anuncio</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Sección 2: Emprendimientos y productos pendientes -->
-                            <div class="seccion_formulario">
-                                <h2 class="titulo_seccion">Emprendimientos y productos pendientes de Aprobación</h2>
-                                <div class="admin-grid">
-                                    <div class="admin-element">
-                                        <span>Ejemplo de emprendimiento</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de emprendimiento</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de emprendimiento</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Sección 3: Información transporte público -->
+                            
                             <div class="seccion_formulario">
                                 <h2 class="titulo_seccion">Información transporte público</h2>
                                 
@@ -109,60 +68,6 @@
                                 <input type="email" class="txt_campo" id="txtCorreo" placeholder="Ingrese el correo electrónico">
 
                                 <button type="submit" class="btn_ancho_completo btn_primario" id="btnActualizar">Actualizar</button>
-                            </div>
-                            <!-- Sección 4: Reporte y sugerencias pendientes -->
-                            <div class="seccion_formulario">
-                                <h2 class="titulo_seccion">Reporte y sugerencias pendientes</h2>
-                                <div class="admin-grid">
-                                    <div class="admin-element">
-                                        <span>Ejemplo de reporte</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de reporte</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de reporte</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Solicitudes del calendario pendientes -->
-                            <div class="seccion_formulario">
-                                <h2 class="titulo_seccion">Solicitudes del calendario pendientes</h2>
-                                <div class="admin-grid">
-                                    <div class="admin-element">
-                                        <span>Ejemplo de evento</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de evento</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                    <div class="admin-element">
-                                        <span>Ejemplo de evento</span>
-                                        <div class="admin-buttons">
-                                            <button type="button" class="btn_enviar btn-aprobar">Aprobar</button>
-                                            <button type="button" class="btn_enviar btn-rechazar">Rechazar</button>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </form>
                     </div>
