@@ -30,20 +30,12 @@
                     <h2>Reportes y Sugerencias</h2>
                 </div>
 
-                <!-- Contenedor de ejemplos de reportes (solo para mostrar, sin funcionalidad) -->
+                <!-- Contenedor de tarjetas dinámicas -->
                 <div class="contenedor_tarjetas">
-                    <div class="tarjeta">
-                        <p>
-                            <strong>ID:</strong> 01<br>
-                            <strong>Descripción:</strong> Falta iluminación en la plaza<br>
-                            <strong>Prioridad:</strong> Nivel 2<br>
-                        </p>
-                    </div>
-                    <div class="tarjeta">
-                        <p>
-                            <strong>ID:</strong> 02<br>
-                            <strong>Descripción:</strong> Crear una zona Wi-Fi libre<br>
-                            <strong>Prioridad:</strong> Nivel 1<br>
+                    <div class="tarjeta" id="tarjeta-vacia">
+                        <p style="text-align: center; color: #666; font-style: italic;">
+                            Aún no hay reportes o sugerencias<br>
+                            <span style="font-size: 0.9em;">¡Sé el primero en crear uno!</span>
                         </p>
                     </div>
                 </div>
@@ -53,8 +45,7 @@
                     <h3 class="titulo_seccion">Crea tu reporte o sugerencia</h3>
 
                     <form class="formulario_principal" id="formReporte">
-                        
- 
+
                         <!-- Campo para seleccionar la fecha desde un calendario -->
                         <label class="etiqueta_formulario" for="fechaReporte">Fecha del reporte</label>
                         <input type="date" id="fechaReporte" class="txt_campo" required>
@@ -71,6 +62,13 @@
                             <option value="nivel2">Nivel 2</option>
                             <option value="nivel3">Nivel 3</option>
                         </select>
+
+                        <!-- Opciones de visibilidad mediante botones de radio -->
+                        <label class="etiqueta_formulario">Visibilidad</label>
+                        <div style="margin-bottom: 15px;">
+                            <label><input type="radio" name="visibilidad" value="publico"> Público</label>
+                            <label style="margin-left: 20px;"><input type="radio" name="visibilidad" value="privado"> Privado</label>
+                        </div>
 
                         <!-- Botón para enviar el formulario -->
                         <button type="submit" class="btn_primario">Enviar</button>
@@ -91,4 +89,5 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
+
 
