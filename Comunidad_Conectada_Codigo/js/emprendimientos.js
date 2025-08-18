@@ -7,15 +7,21 @@ const formularioProducto = document.getElementById("formulario_principal1");
 const btnAgregarProducto = document.getElementById("btnRegistrarse1");
 
 const camposFormularioEmprendimiento = {
-    nombreNegocio: document.getElementById("nombreEmprendimiento"),
-    descripcionNegocio: document.getElementById("descripcionEmprendimiento")
+    nombreNegocio: document.getElementById("txtNombreCompleto"),
+    descripcionNegocio: document.getElementById("descripcion_negocio")
 };
 
-const camposFormularioProducto = {  
-    nombreProducto: document.getElementById("nombreProducto"),
-    descripcionProducto: document.getElementById("descripcionProducto"),
+const camposFormularioProducto = {
+    nombreProducto: document.getElementById("txtNombreCompleto1"),
+    descripcionProducto: document.getElementById("descripcion_producto"),
     precio: document.getElementById("precio")
 };
+
+// Array para almacenar emprendimientos y productos
+let emprendimientos = [];
+let productos = [];
+let emprendimientoIdCounter = 1;
+let productoIdCounter = 1;
 
 // Reglas de validación para crear emprendimiento
 const reglasValidacionEmprendimiento = {
@@ -111,115 +117,335 @@ const reglasValidacionProducto = {
     }
 };
 
-// Event listener para el botón de crear emprendimiento
-btnCrearEmprendimiento.addEventListener("click", (eventoClick) => {
-    eventoClick.preventDefault();
-    const errorEncontrado = ejecutarValidacionEmprendimiento();
+// Función para guardar datos en localStorage - CORREGIDA
+const guardarDatos = () => {
+    try {
+        console.log('💾 Guardando datos en localStorage...');
+        console.log('📊 Emprendimientos a guardar:', emprendimientos);
+        console.log('🛍️ Productos a guardar:', productos);
+        
+        localStorage.setItem('emprendimientos', JSON.stringify(emprendimientos));
+        localStorage.setItem('productos', JSON.stringify(productos));
+        localStorage.setItem('emprendimientoIdCounter', emprendimientoIdCounter.toString());
+        localStorage.setItem('productoIdCounter', productoIdCounter.toString());
+        
+        console.log('✅ Datos guardados exitosamente en localStorage');
+        
+        // Disparar evento personalizado para notificar cambios
+        window.dispatchEvent(new CustomEvent('datosActualizados', {
+            detail: { emprendimientos, productos }
+        }));
+        
+    } catch (error) {
+        console.error('Error al guardar los datos:', error);
+    }
+};
+
+// Función para cargar datos desde localStorage - CORREGIDA
+const cargarDatosGuardados = () => {
+    try {
+        console.log('📥 Cargando datos desde localStorage...');
+        
+        const emprendimientosGuardados = JSON.parse(localStorage.getItem('emprendimientos') || '[]');
+        const productosGuardados = JSON.parse(localStorage.getItem('productos') || '[]');
+        const ultimoIdEmprendimiento = parseInt(localStorage.getItem('emprendimientoIdCounter') || '1');
+        const ultimoIdProducto = parseInt(localStorage.getItem('productoIdCounter') || '1');
+        
+        emprendimientos = emprendimientosGuardados;
+        productos = productosGuardados;
+        emprendimientoIdCounter = ultimoIdEmprendimiento;
+        productoIdCounter = ultimoIdProducto;
+        
+        console.log('📊 Emprendimientos cargados:', emprendimientos);
+        console.log('🛍️ Productos cargados:', productos);
+        
+        actualizarSelectsEmprendimiento();
+        actualizarListaPublica();
+        
+        console.log('Datos cargados exitosamente');
+    } catch (error) {
+        console.error('Error al cargar datos guardados:', error);
+    }
+};
+
+// Función para actualizar los selects de emprendimiento
+const actualizarSelectsEmprendimiento = () => {
+    const selects = [
+        document.querySelector('#formulario_principal1 select'), // Select del formulario de productos
+        document.querySelector('.contenedor_formulario:last-child select') // Select de "Mis productos"
+    ];
+
+    selects.forEach(select => {
+        if (select) {
+            // Mantener la opción por defecto
+            select.innerHTML = '<option value="" selected disabled>Emprendimiento</option>';
+            
+            // Agregar los emprendimientos creados
+            emprendimientos.forEach(emprendimiento => {
+                const option = document.createElement('option');
+                option.value = emprendimiento.id;
+                option.textContent = emprendimiento.nombre;
+                select.appendChild(option);
+            });
+        }
+    });
+};
+
+// Función para guardar emprendimiento 
+const guardarEmprendimiento = (nombre, descripcion) => {
+    console.log('🏢 Creando nuevo emprendimiento...');
     
-    if (errorEncontrado) {
-        // Usar SweetAlert2 para mostrar el error
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "Error en el formulario",
-                text: errorEncontrado.mensaje,
-                icon: "error",
-                confirmButtonColor: '#dc3545'
-            });
-        } else {
-            alert("Error: " + errorEncontrado.mensaje);
-        }
+    const nuevoEmprendimiento = {
+        id: emprendimientoIdCounter++,
+        nombre: nombre.trim(),
+        descripcion: descripcion.trim(),
+        fechaCreacion: new Date().toISOString()
+    };
+    
+    emprendimientos.push(nuevoEmprendimiento);
+    
+    console.log('✅ Emprendimiento creado:', nuevoEmprendimiento);
+    
+    // IMPORTANTE: Guardar inmediatamente en localStorage
+    guardarDatos();
+    
+    actualizarSelectsEmprendimiento();
+    actualizarListaPublica();
+    
+    return nuevoEmprendimiento;
+};
+
+// Función para guardar producto 
+const guardarProducto = (emprendimientoId, nombreProducto, descripcionProducto, precio) => {
+    console.log('🛍️ Creando nuevo producto...');
+    
+    const nuevoProducto = {
+        id: productoIdCounter++,
+        emprendimientoId: parseInt(emprendimientoId),
+        nombre: nombreProducto.trim(),
+        descripcion: descripcionProducto.trim(),
+        precio: parseFloat(precio),
+        fechaCreacion: new Date().toISOString(),
+        estado: 'Pendiente'
+    };
+    
+    productos.push(nuevoProducto);
+    
+    console.log('✅ Producto creado:', nuevoProducto);
+    
+    // IMPORTANTE: Guardar inmediatamente en localStorage
+    guardarDatos();
+    
+    actualizarMisProductos();
+    actualizarListaPublica();
+    
+    return nuevoProducto;
+};
+
+// Función para actualizar la sección "Mis productos"
+const actualizarMisProductos = () => {
+    const selectMisProductos = document.querySelector('.contenedor_formulario:last-child select');
+    const textareaMisProductos = document.querySelector('.contenedor_formulario:last-child textarea[readonly]');
+    
+    if (selectMisProductos && textareaMisProductos) {
+        // Agregar event listener para el cambio de emprendimiento
+        selectMisProductos.addEventListener('change', function() {
+            const emprendimientoId = parseInt(this.value);
+            if (emprendimientoId) {
+                mostrarProductosDeEmprendimiento(emprendimientoId, textareaMisProductos);
+            } else {
+                textareaMisProductos.value = '';
+            }
+        });
+    }
+};
+
+// Función para mostrar productos de un emprendimiento específico
+const mostrarProductosDeEmprendimiento = (emprendimientoId, textarea) => {
+    const productosDelEmprendimiento = productos.filter(p => p.emprendimientoId === emprendimientoId);
+    
+    if (productosDelEmprendimiento.length === 0) {
+        textarea.value = 'No hay productos registrados para este emprendimiento.';
+        return;
+    }
+    
+    let contenido = '';
+    productosDelEmprendimiento.forEach((producto, index) => {
+        if (index > 0) contenido += '\n\n';
+        contenido += `[${producto.nombre}]\n`;
+        contenido += `${producto.descripcion}\n`;
+        contenido += `₡${producto.precio.toLocaleString()}\n`;
+        contenido += `Estado: ${producto.estado}`;
+    });
+    
+    textarea.value = contenido;
+};
+
+// Función para actualizar la lista pública (para usar en lista_publica.html)
+const actualizarListaPublica = () => {
+    // Esta función se ejecutará si estamos en la página de lista pública
+    const contenedorListaPublica = document.querySelector('.contenedor_formulario_lista_publica .seccion_formulario');
+    
+    if (contenedorListaPublica) {
+        console.log('🔄 Actualizando lista pública desde el archivo principal...');
         
-        if (errorEncontrado.referenciaHTML) {
-            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            errorEncontrado.referenciaHTML.focus();
-        }
-    } else {
+        // Limpiar contenido existente excepto el párrafo y enlace final
+        const elementosAConservar = contenedorListaPublica.querySelectorAll('p, a');
+        contenedorListaPublica.innerHTML = '';
         
-        /// obtener datos del formulario
-
-        const nombreNegocio = camposFormularioEmprendimiento.nombreNegocio.value.trim()
-        const descripcionNegocio = camposFormularioEmprendimiento.descripcionNegocio.value.trim()
-
-        registrar_emprendimiento(
-            nombreNegocio, descripcionNegocio
-        )
-
-
-
-
-        // Emprendimiento creado exitosamente
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "¡Emprendimiento creado exitosamente!",
-                text: "El emprendimiento ha sido registrado y está pendiente de aprobación.",
-                icon: "success",
-                confirmButtonColor: '#28a745',
-                confirmButtonText: 'Continuar'
-            }).then(() => {
-                limpiarCamposEmprendimiento();
+        // Generar textareas con la información de emprendimientos y productos
+        emprendimientos.forEach(emprendimiento => {
+            const productosDelEmprendimiento = productos.filter(p => p.emprendimientoId === emprendimiento.id);
+            
+            if (productosDelEmprendimiento.length > 0) {
+                productosDelEmprendimiento.forEach(producto => {
+                    const textarea = document.createElement('textarea');
+                    textarea.className = 'txt_campo_jc';
+                    textarea.setAttribute('readonly', true);
+                    textarea.setAttribute('rows', '5');
+                    
+                    const contenido = `[${emprendimiento.nombre}]\n${emprendimiento.descripcion}\n[${producto.nombre}]\n${producto.descripcion}\n₡${producto.precio.toLocaleString()}`;
+                    textarea.value = contenido;
+                    
+                    contenedorListaPublica.appendChild(textarea);
+                });
+            } else {
+                // Mostrar emprendimiento sin productos
+                const textarea = document.createElement('textarea');
+                textarea.className = 'txt_campo_jc';
+                textarea.setAttribute('readonly', true);
+                textarea.setAttribute('rows', '5');
+                
+                const contenido = `[${emprendimiento.nombre}]\n${emprendimiento.descripcion}\n[Sin productos disponibles]\nEste emprendimiento aún no tiene productos registrados.\n`;
+                textarea.value = contenido;
+                
+                contenedorListaPublica.appendChild(textarea);
+            }
+        });
+        
+        // Restaurar elementos conservados
+        elementosAConservar.forEach(elemento => {
+            contenedorListaPublica.appendChild(elemento);
+        });
+        
+        // Si no hay emprendimientos, mostrar mensaje
+        if (emprendimientos.length === 0) {
+            const textarea = document.createElement('textarea');
+            textarea.className = 'txt_campo_jc';
+            textarea.setAttribute('readonly', true);
+            textarea.setAttribute('rows', '3');
+            textarea.value = 'Aún no hay emprendimientos registrados.\n¡Sé el primero en crear uno!';
+            contenedorListaPublica.appendChild(textarea);
+            
+            // Restaurar elementos conservados
+            elementosAConservar.forEach(elemento => {
+                contenedorListaPublica.appendChild(elemento);
             });
-        } else {
-            alert("¡Emprendimiento creado exitosamente! El emprendimiento ha sido registrado y está pendiente de aprobación.");
-            limpiarCamposEmprendimiento();
         }
     }
-});
+};
+
+// Event listener para el botón de crear emprendimiento
+if (btnCrearEmprendimiento) {
+    btnCrearEmprendimiento.addEventListener("click", (eventoClick) => {
+        eventoClick.preventDefault();
+        const errorEncontrado = ejecutarValidacionEmprendimiento();
+        
+        if (errorEncontrado) {
+            // Usar SweetAlert2 para mostrar el error
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: "Error en el formulario",
+                    text: errorEncontrado.mensaje,
+                    icon: "error",
+                    confirmButtonColor: '#dc3545'
+                });
+            } else {
+                alert("Error: " + errorEncontrado.mensaje);
+            }
+            
+            if (errorEncontrado.referenciaHTML) {
+                errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                errorEncontrado.referenciaHTML.focus();
+            }
+        } else {
+            // Guardar emprendimiento
+            const nombreNegocio = camposFormularioEmprendimiento.nombreNegocio.value;
+            const descripcionNegocio = camposFormularioEmprendimiento.descripcionNegocio.value;
+            
+            const emprendimientoCreado = guardarEmprendimiento(nombreNegocio, descripcionNegocio);
+            
+            // Emprendimiento creado exitosamente
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: "¡Emprendimiento creado exitosamente!",
+                    text: `"${emprendimientoCreado.nombre}" ha sido registrado y está pendiente de aprobación.`,
+                    icon: "success",
+                    confirmButtonColor: '#28a745',
+                    confirmButtonText: 'Continuar'
+                }).then(() => {
+                    limpiarCamposEmprendimiento();
+                });
+            } else {
+                alert(`¡Emprendimiento "${emprendimientoCreado.nombre}" creado exitosamente! Está pendiente de aprobación.`);
+                limpiarCamposEmprendimiento();
+            }
+        }
+    });
+}
 
 // Event listener para el botón de agregar producto
-btnAgregarProducto.addEventListener("click", (eventoClick) => {
-    eventoClick.preventDefault();
-    const errorEncontrado = ejecutarValidacionProducto();
-    
-    if (errorEncontrado) {
-        // Usar SweetAlert2 para mostrar el error
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "Error en el formulario",
-                text: errorEncontrado.mensaje,
-                icon: "error",
-                confirmButtonColor: '#dc3545'
-            });
-        } else {
-            alert("Error: " + errorEncontrado.mensaje);
-        }
+if (btnAgregarProducto) {
+    btnAgregarProducto.addEventListener("click", (eventoClick) => {
+        eventoClick.preventDefault();
+        const errorEncontrado = ejecutarValidacionProducto();
         
-        // Hacer scroll al primer campo con error si existe
-        if (errorEncontrado.referenciaHTML) {
-            errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            errorEncontrado.referenciaHTML.focus();
-        }
-    } else {
-
-        /// obtener datos del formulario
-
-        const nombreProducto = camposFormularioProducto.nombreProducto.value.trim()
-        const descripcionProducto = camposFormularioProducto.descripcionProducto.value.trim()
-        const precio = camposFormularioProducto.precio.value.trim()
-
-        registrar_producto(
-            nombreProducto, descripcionProducto, precio
-        )
-
-
-
-
-        // Producto agregado exitosamente
-        if (typeof Swal !== 'undefined') {
-            Swal.fire({
-                title: "¡Producto agregado exitosamente!",
-                text: "El producto ha sido registrado y está pendiente de aprobación.",
-                icon: "success",
-                confirmButtonColor: '#28a745',
-                confirmButtonText: 'Continuar'
-            }).then(() => {
-                limpiarCamposProducto();
-            });
+        if (errorEncontrado) {
+            // Usar SweetAlert2 para mostrar el error
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: "Error en el formulario",
+                    text: errorEncontrado.mensaje,
+                    icon: "error",
+                    confirmButtonColor: '#dc3545'
+                });
+            } else {
+                alert("Error: " + errorEncontrado.mensaje);
+            }
+            
+            // Hacer scroll al primer campo con error si existe
+            if (errorEncontrado.referenciaHTML) {
+                errorEncontrado.referenciaHTML.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                errorEncontrado.referenciaHTML.focus();
+            }
         } else {
-            alert("¡Producto agregado exitosamente! El producto ha sido registrado y está pendiente de aprobación.");
-            limpiarCamposProducto();
+            // Guardar producto
+            const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
+            const emprendimientoId = selectEmprendimiento.value;
+            const nombreProducto = camposFormularioProducto.nombreProducto.value;
+            const descripcionProducto = camposFormularioProducto.descripcionProducto.value;
+            const precio = camposFormularioProducto.precio.value;
+            
+            const productoCreado = guardarProducto(emprendimientoId, nombreProducto, descripcionProducto, precio);
+            
+            // Producto agregado exitosamente
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: "¡Producto agregado exitosamente!",
+                    text: `"${productoCreado.nombre}" ha sido registrado y está pendiente de aprobación.`,
+                    icon: "success",
+                    confirmButtonColor: '#28a745',
+                    confirmButtonText: 'Continuar'
+                }).then(() => {
+                    limpiarCamposProducto();
+                });
+            } else {
+                alert(`¡Producto "${productoCreado.nombre}" agregado exitosamente! Está pendiente de aprobación.`);
+                limpiarCamposProducto();
+            }
         }
-    }
-});
+    });
+}
 
 // Función para mostrar o esconder errores en emprendimientos
 const mostrarMensajeErrorEmprendimiento = (elementoInput, mensajeError) => {
@@ -305,6 +531,8 @@ const ejecutarValidacionEmprendimiento = () => {
 // Función para validar el dropdown de emprendimiento
 const validarSeleccionEmprendimiento = () => {
     const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
+    if (!selectEmprendimiento) return true;
+    
     const contenedorSelect = selectEmprendimiento.parentElement;
     let contenedorError = contenedorSelect.querySelector('.error-message');
 
@@ -404,8 +632,14 @@ const limpiarCamposProducto = () => {
     }
 };
 
-// Agregar validación en tiempo real para mostrar contador de caracteres
+// Funcionalidad para el botón "Eliminar" en la sección "Mis productos"
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Iniciando sistema de emprendimientos...');
+    
+    // Cargar datos guardados al inicio
+    cargarDatosGuardados();
+    
+    // Configurar contadores de caracteres
     const nombreProductoInput = document.getElementById("txtNombreCompleto1");
     const descripcionProductoInput = document.getElementById("descripcion_producto");
     
@@ -422,6 +656,98 @@ document.addEventListener('DOMContentLoaded', function() {
         descripcionProductoInput.addEventListener('input', function() {
             const longitudActual = this.value.length;
             this.placeholder = `${longitudActual}/300 caracteres`;
+        });
+    }
+    
+    // Configurar la sección "Mis productos"
+    actualizarMisProductos();
+    
+    // Botón eliminar
+    const btnEliminar = document.querySelector('.btn_secundario');
+    const textareaMisProductos = document.querySelector('.contenedor_formulario:last-child textarea[readonly]');
+    const selectMisProductos = document.querySelector('.contenedor_formulario:last-child select');
+    
+    if (btnEliminar && textareaMisProductos && selectMisProductos) {
+        btnEliminar.addEventListener('click', function() {
+            const emprendimientoId = parseInt(selectMisProductos.value);
+            
+            if (!emprendimientoId) {
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        title: 'Selecciona un emprendimiento',
+                        text: "Primero debes seleccionar un emprendimiento para eliminar sus productos",
+                        icon: 'warning',
+                        confirmButtonColor: '#dc3545'
+                    });
+                } else {
+                    alert('Primero debes seleccionar un emprendimiento para eliminar sus productos');
+                }
+                return;
+            }
+            
+            // Usar SweetAlert2 para confirmar la eliminación
+            if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                    title: '¿Estás seguro?',
+                    text: "Esta acción eliminará todos los productos del emprendimiento seleccionado",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Eliminar productos del emprendimiento seleccionado
+                        const productosIniciales = productos.length;
+                        productos = productos.filter(p => p.emprendimientoId !== emprendimientoId);
+                        const productosEliminados = productosIniciales - productos.length;
+                        
+                        // Guardar cambios
+                        guardarDatos();
+                        
+                        // Limpiar el textarea
+                        textareaMisProductos.value = '';
+                        
+                        // Actualizar la lista pública
+                        actualizarListaPublica();
+                        
+                        // Mostrar mensaje de éxito
+                        Swal.fire({
+                            title: '¡Eliminados!',
+                            text: `Se eliminaron ${productosEliminados} producto(s) del emprendimiento.`,
+                            icon: 'success',
+                            confirmButtonColor: '#28a745'
+                        });
+                    }
+                });
+            } else {
+                // Fallback si no hay SweetAlert2
+                if (confirm('¿Estás seguro de que quieres eliminar todos los productos del emprendimiento seleccionado?')) {
+                    const productosIniciales = productos.length;
+                    productos = productos.filter(p => p.emprendimientoId !== emprendimientoId);
+                    const productosEliminados = productosIniciales - productos.length;
+                    
+                    guardarDatos();
+                    textareaMisProductos.value = '';
+                    actualizarListaPublica();
+                    alert(`Se eliminaron ${productosEliminados} producto(s) del emprendimiento.`);
+                }
+            }
+        });
+    }
+
+    // Validación en tiempo real para el select de emprendimiento
+    const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
+    if (selectEmprendimiento) {
+        selectEmprendimiento.addEventListener('change', function() {
+            if (this.value) {
+                const contenedorError = this.parentElement.querySelector('.error-message');
+                if (contenedorError) {
+                    contenedorError.style.display = 'none';
+                }
+                this.style.borderColor = '';
+            }
         });
     }
 });
@@ -456,61 +782,66 @@ Object.values(camposFormularioProducto).forEach(campo => {
     }
 });
 
-// Validación en tiempo real para el select de emprendimiento
-document.addEventListener('DOMContentLoaded', function() {
-    const selectEmprendimiento = document.querySelector('#formulario_principal1 select');
-    if (selectEmprendimiento) {
-        selectEmprendimiento.addEventListener('change', function() {
-            if (this.value) {
-                const contenedorError = this.parentElement.querySelector('.error-message');
-                if (contenedorError) {
-                    contenedorError.style.display = 'none';
-                }
-                this.style.borderColor = '';
-            }
-        });
-    }
-});
+// Funciones auxiliares para debugging (disponibles en la consola)
+window.exportarDatos = function() {
+    console.log('📤 Exportando datos actuales...');
+    const datos = {
+        emprendimientos: emprendimientos,
+        productos: productos,
+        emprendimientoIdCounter: emprendimientoIdCounter,
+        productoIdCounter: productoIdCounter
+    };
+    console.log('📊 Datos exportados:', datos);
+    return datos;
+};
 
-// Funcionalidad para el botón "Eliminar" en la sección "Mis productos"
-document.addEventListener('DOMContentLoaded', function() {
-    const btnEliminar = document.querySelector('.btn_secundario');
-    const textareaMisProductos = document.querySelector('.contenedor_formulario:last-child textarea[readonly]');
+window.importarDatos = function(datos) {
+    console.log('📥 Importando datos...');
+    if (datos.emprendimientos) emprendimientos = datos.emprendimientos;
+    if (datos.productos) productos = datos.productos;
+    if (datos.emprendimientoIdCounter) emprendimientoIdCounter = datos.emprendimientoIdCounter;
+    if (datos.productoIdCounter) productoIdCounter = datos.productoIdCounter;
     
-    if (btnEliminar && textareaMisProductos) {
-        btnEliminar.addEventListener('click', function() {
-            // Usar SweetAlert2 para confirmar la eliminación
-            if (typeof Swal !== 'undefined') {
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: "Esta acción eliminará la información del producto mostrado",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Sí, eliminar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Limpiar el textarea
-                        textareaMisProductos.value = '';
-                        
-                        // Mostrar mensaje de éxito
-                        Swal.fire({
-                            title: '¡Eliminado!',
-                            text: 'La información del producto ha sido eliminada.',
-                            icon: 'success',
-                            confirmButtonColor: '#28a745'
-                        });
-                    }
-                });
-            } else {
-                // Fallback si no hay SweetAlert2
-                if (confirm('¿Estás seguro de que quieres eliminar la información del producto?')) {
-                    textareaMisProductos.value = '';
-                    alert('La información del producto ha sido eliminada.');
-                }
-            }
-        });
+    actualizarSelectsEmprendimiento();
+    actualizarListaPublica();
+    guardarDatos();
+    
+    console.log('Datos importados exitosamente');
+};
+
+window.limpiarTodosLosDatos = function() {
+    if (confirm('¿Estás seguro de que quieres eliminar todos los emprendimientos y productos?')) {
+        emprendimientos = [];
+        productos = [];
+        emprendimientoIdCounter = 1;
+        productoIdCounter = 1;
+        
+        actualizarSelectsEmprendimiento();
+        actualizarListaPublica();
+        guardarDatos();
+        
+        console.log('🗑️ Todos los datos han sido eliminados');
+        alert('Todos los datos han sido eliminados.');
     }
-});
+};
+
+window.verEstadoActual = function() {
+    console.log('=== ESTADO ACTUAL DEL SISTEMA ===');
+    console.log('Emprendimientos:', emprendimientos);
+    console.log('Productos:', productos);
+    console.log('Contador emprendimientos:', emprendimientoIdCounter);
+    console.log('Contador productos:', productoIdCounter);
+    console.log('localStorage emprendimientos:', localStorage.getItem('emprendimientos'));
+    console.log('localStorage productos:', localStorage.getItem('productos'));
+    return {
+        emprendimientos,
+        productos,
+        emprendimientoIdCounter,
+        productoIdCounter,
+        localStorage: {
+            emprendimientos: localStorage.getItem('emprendimientos'),
+            productos: localStorage.getItem('productos')
+        }
+    };
+};
+

@@ -6,6 +6,12 @@ const camposFormulario = {
     prioridad: document.getElementById("prioridad")
 };
 
+// Referencia al contenedor de tarjetas
+const contenedorTarjetas = document.querySelector(".contenedor_tarjetas");
+
+// Variable para generar IDs únicos
+let contadorID = 1; // Empezamos en 1 porque no hay tarjetas existentes
+
 // Reglas de validación estructuradas
 const reglasValidacion = {
     fecha: (campoInput) => {
@@ -78,6 +84,61 @@ const validarSeleccionVisibilidad = () => {
     return visibilidadSeleccionada ? true : false;
 };
 
+// Función para ocultar la tarjeta vacía cuando se agrega el primer reporte
+const ocultarTarjetaVacia = () => {
+    const tarjetaVacia = document.getElementById('tarjeta-vacia');
+    if (tarjetaVacia) {
+        tarjetaVacia.style.display = 'none';
+    }
+};
+
+// Función para mostrar la tarjeta vacía si no hay reportes
+const mostrarTarjetaVacia = () => {
+    const tarjetaVacia = document.getElementById('tarjeta-vacia');
+    const tarjetasReportes = contenedorTarjetas.querySelectorAll('.tarjeta:not(#tarjeta-vacia)');
+    
+    if (tarjetaVacia && tarjetasReportes.length === 0) {
+        tarjetaVacia.style.display = 'block';
+    }
+};
+
+// Función para crear una nueva tarjeta con los datos del formulario
+const crearNuevaTarjeta = (datosReporte) => {
+    const nuevaTarjeta = document.createElement('div');
+    nuevaTarjeta.className = 'tarjeta';
+    
+    // Formatear el nivel de prioridad
+    const prioridadTexto = datosReporte.prioridad.charAt(0).toUpperCase() + datosReporte.prioridad.slice(1);
+    const prioridadFormateada = prioridadTexto.replace('nivel', 'Nivel ');
+    
+    // Formatear la visibilidad
+    const visibilidadTexto = datosReporte.visibilidad === 'publico' ? 'Público' : 'Privado';
+    
+    nuevaTarjeta.innerHTML = `
+        <p>
+            <strong>ID:</strong> ${String(datosReporte.id).padStart(2, '0')}<br>
+            <strong>Descripción:</strong> ${datosReporte.descripcion}<br>
+            <strong>Prioridad:</strong> ${prioridadFormateada}<br>
+            <strong>Visible:</strong> ${visibilidadTexto}
+        </p>
+    `;
+    
+    return nuevaTarjeta;
+};
+
+// Función para obtener los datos del formulario
+const obtenerDatosFormulario = () => {
+    const visibilidadSeleccionada = document.querySelector('input[name="visibilidad"]:checked');
+    
+    return {
+        id: contadorID,
+        fecha: camposFormulario.fecha.value,
+        descripcion: camposFormulario.descripcion.value.trim(),
+        prioridad: camposFormulario.prioridad.value,
+        visibilidad: visibilidadSeleccionada ? visibilidadSeleccionada.value : null
+    };
+};
+
 // Función principal de validación
 const ejecutarValidacionCompleta = () => {
     let primerErrorEncontrado = null;
@@ -133,6 +194,29 @@ const limpiarCampos = () => {
     formulario.reset();
 };
 
+// Función para mostrar la alerta según la visibilidad
+const mostrarAlertaVisibilidad = (visibilidad) => {
+    const esPrivado = visibilidad === 'privado';
+    const titulo = esPrivado ? "Reporte Privado" : "Reporte Público";
+    const mensaje = esPrivado 
+        ? "Este reporte solo lo puede ver el administrador" 
+        : "Se publicó en la vista pública";
+    const icono = esPrivado ? "info" : "success";
+    const colorBoton = esPrivado ? '#17a2b8' : '#28a745';
+    
+    if (typeof Swal !== 'undefined') {
+        Swal.fire({
+            title: titulo,
+            text: mensaje,
+            icon: icono,
+            confirmButtonColor: colorBoton,
+            confirmButtonText: 'Entendido'
+        });
+    } else {
+        alert(`${titulo}: ${mensaje}`);
+    }
+};
+
 // Desactivar validaciones HTML5 nativas
 formulario.setAttribute('novalidate', 'true');
 
@@ -162,7 +246,22 @@ formulario.addEventListener("submit", function (e) {
             errorEncontrado.referenciaHTML.focus();
         }
     } else {
-        // Si no hay errores: mensaje de éxito y reinicio del formulario
+        // Si no hay errores: obtener datos y crear nueva tarjeta
+        const datosReporte = obtenerDatosFormulario();
+        
+        // Crear y agregar la nueva tarjeta
+        const nuevaTarjeta = crearNuevaTarjeta(datosReporte);
+        
+        // Ocultar la tarjeta vacía al agregar el primer reporte
+        ocultarTarjetaVacia();
+        
+        // Agregar la nueva tarjeta
+        contenedorTarjetas.appendChild(nuevaTarjeta);
+        
+        // Incrementar el contador de ID para el próximo reporte
+        contadorID++;
+        
+        // Mostrar mensaje de éxito
         if (typeof Swal !== 'undefined') {
             Swal.fire({
                 title: "¡Éxito!",
@@ -171,10 +270,14 @@ formulario.addEventListener("submit", function (e) {
                 confirmButtonColor: '#28a745',
                 confirmButtonText: 'Continuar'
             }).then(() => {
+                // Mostrar alerta específica según visibilidad
+                mostrarAlertaVisibilidad(datosReporte.visibilidad);
+                // Limpiar formulario
                 limpiarCampos();
             });
         } else {
             alert("¡Éxito! Tu reporte ha sido enviado correctamente.");
+            mostrarAlertaVisibilidad(datosReporte.visibilidad);
             limpiarCampos();
         }
     }
