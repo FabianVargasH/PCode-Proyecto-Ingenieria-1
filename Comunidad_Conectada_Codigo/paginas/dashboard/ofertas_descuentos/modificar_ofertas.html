@@ -33,24 +33,9 @@
                 <!-- Formulario principal para editar ofertas existentes -->
                 <section class="contenedor_formulario_grande">
                     <form class="formulario_principal" id="formModificarOferta">
-
-                        <!-- Selector de emprendimiento (dropdown) -->
-                        <label class="etiqueta_formulario" for="selectEmprendimiento">Emprendimiento</label>
-                        <select id="selectEmprendimiento" class="txt_campo">
-                            <option value="">Seleccione un emprendimiento</option>
-                            <option value="emprendimiento1">Emprendimiento 1</option>
-                            <option value="emprendimiento2">Emprendimiento 2</option>
-                            <option value="emprendimiento3">Emprendimiento 3</option>
-                        </select>
-
                         <!-- Selector de producto asociado -->
                         <label class="etiqueta_formulario" for="selectProducto">Producto</label>
-                        <select id="selectProducto" class="txt_campo">
-                            <option value="">Seleccione un producto</option>
-                            <option value="producto1">Producto 1</option>
-                            <option value="producto2">Producto 2</option>
-                            <option value="producto3">Producto 3</option>
-                        </select>
+                        <input type="text" id = "txtProducto" class="txt_campo">
 
                         <!-- Campo para ingresar el nuevo descuento que se aplicará -->
                         <label class="etiqueta_formulario" for="txtNuevoDescuento">Nuevo Descuento</label>
@@ -88,3 +73,4 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
+
