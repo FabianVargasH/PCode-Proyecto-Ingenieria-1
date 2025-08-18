@@ -41,22 +41,19 @@
                             
                             <div class="seccion_formulario">
                                 <label class="etiqueta_formulario" for="txtNombreCompleto">Nombre del negocio*</label>
-                                <input type="text" class="txt_campo" id="nombreEmprendimiento" name="nombre_negocio" required>
+                                <input type="text" class="txt_campo" id="txtNombreCompleto" name="nombre_negocio" required>
                                 <span class="error-message" aria-live="polite"></span>
                             </div>
 
                             <div class="seccion_formulario">
                                 <label class="etiqueta_formulario" for="descripcion_negocio">Descripción del negocio</label>
-                                <textarea class="txt_campo" id="descripcionEmprendimiento" name="descripcion_negocio" rows="3"></textarea>
+                                <textarea class="txt_campo" id="descripcion_negocio" name="descripcion_negocio" rows="3"></textarea>
                             </div>
 
                             <div class="enlace_navegacion">
                                 <button type="submit" id="btnRegistrarse" class="btn_primario">Crear Emprendimiento</button>
                             </div>
                         </form>
-                        <p class="enlace_navegacion">
-                            Nota: Todo emprendimiento creado pasa por un sistema de aprobación/rechazo
-                        </p>
                     </div>
                     <!-- Formulario Actualizar Emprendimiento -->
                     <div class="contenedor_formulario" style="margin-bottom: 30px;">
@@ -79,13 +76,13 @@
 
                             <div class="seccion_formulario">
                                 <label class="etiqueta_formulario" for="txtNombreCompleto1">Nombre del producto*</label>
-                                <input type="text" class="txt_campo" id="nombreProducto" name="nombre_producto" placeholder="0/50 caracteres" required maxlength="50">
+                                <input type="text" class="txt_campo" id="txtNombreCompleto1" name="nombre_producto" placeholder="0/50 caracteres" required maxlength="50">
                                 <span class="error-message" aria-live="polite"></span>
                             </div>
 
                             <div class="seccion_formulario">
                                 <label class="etiqueta_formulario" for="descripcion_producto">Descripción*</label>
-                                <textarea class="txt_campo" id="descripcionProducto" name="descripcion_producto" required placeholder="0/300 caracteres" maxlength="300" rows="3"></textarea>
+                                <textarea class="txt_campo" id="descripcion_producto" name="descripcion_producto" required placeholder="0/300 caracteres" maxlength="300" rows="3"></textarea>
                                 <span class="error-message" aria-live="polite"></span>
                             </div>
 
@@ -135,11 +132,7 @@
         </footer>
     </div>
 
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="/Comunidad_Conectada_Codigo/backend/servicios/servicio_crear_emprendimiento.js"></script>
-    <script src="/Comunidad_Conectada_Codigo/backend/servicios/servicio_crear_producto.js"></script>
-    <script src="/Comunidad_Conectada_Codigo/js/emprendimientos.js"></script>
+    <script src="/js/emprendimientos.js"></script>
 </body>
 </html>
